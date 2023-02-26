@@ -91,6 +91,6 @@ public class userDBContext extends DBContext<User> {
     public static void main(String[] args) {
         userDBContext s = new userDBContext();
         User st = s.get("duongbeu777@gmail.com", "duong12345");
-        System.out.println(st.getRoleId());
+        System.out.println(st.getInstructorId());
     }
 }
