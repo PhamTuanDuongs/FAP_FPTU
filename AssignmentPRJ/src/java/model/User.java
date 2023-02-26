@@ -12,16 +12,19 @@ public class User {
 
     private String username;
     private String password;
-    private int role;
-    private String displayname;
+    private int roleId;
+    private int StudentId;
+    private int InstructorId;
 
-    public int getRole() {
-        return role;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
+
+   
 
     public String getUsername() {
         return username;
@@ -39,12 +42,21 @@ public class User {
         this.password = password;
     }
 
-    public String getDisplayname() {
-        return displayname;
+    public int getStudentId() {
+        return StudentId;
     }
 
-    public void setDisplayname(String displayname) {
-        this.displayname = displayname;
+    public void setStudentId(int StudentId) {
+        this.StudentId = StudentId;
     }
+
+    public int getInstructorId() {
+        return InstructorId;
+    }
+
+    public void setInstructorId(int InstructorId) {
+        this.InstructorId = InstructorId;
+    }
+ 
 
 }
