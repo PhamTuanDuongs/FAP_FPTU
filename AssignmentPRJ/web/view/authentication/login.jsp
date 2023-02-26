@@ -82,7 +82,7 @@
         <div class="container">
             <div class="login">
                 <div class="image">
-                    <img style="width: 100%; height: 100px;" src="../img/tải xuống (1).png" alt="">
+                    <img style="width: 100%; height: 100px;" src="../img/logo.png" alt="">
                 </div>
                 <div class="button-login">
                     <form action="login" method="Post">
