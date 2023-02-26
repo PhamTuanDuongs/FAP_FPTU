@@ -85,7 +85,7 @@
                     <img style="width: 100%; height: 100px;" src="../img/logo.png" alt="">
                 </div>
                 <div class="button-login">
-                    <form action="login" method="POST">
+                    <form action="/fap/login" method="POST">
                         <input class="input" type="text" name="user" placeholder="Email" ></br>
                         <input class="input" type="text" name="pass" placeholder="Password" ></br> 
                         <input class="submit" type="submit" value="Login">
