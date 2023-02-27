@@ -87,7 +87,7 @@
                 <div class="button-login">
                     <form action="/fap/login" method="POST">
                         <input class="input" type="text" name="user" placeholder="Email" ></br>
-                        <input class="input" type="text" name="pass" placeholder="Password" ></br> 
+                        <input class="input" type="password" name="pass" placeholder="Password" ></br> 
                         <input class="submit" type="submit" value="Login">
                     </form>
                 </div>
