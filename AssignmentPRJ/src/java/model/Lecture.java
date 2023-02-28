@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author duong
@@ -14,6 +16,15 @@ public class Lecture {
     private String group;
     private String status;
     private int slotId;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    private Date date;
 
     public Lecture() {
     }

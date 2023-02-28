@@ -49,7 +49,7 @@ public class LectureDBContext extends DBContext<Lecture> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select g.Name,t.SlotID, c.Code,r.rname,a.[Status]\n"
+            String sql = "select g.Name,t.SlotID,l.[Date],c.Code,r.rname,a.[Status]\n"
                     + " from \n"
                     + " Lecture l inner join [Group] g \n"
                     + "on l.GroupID = g.GroupID inner join TimeSlot t \n"
@@ -73,6 +73,7 @@ public class LectureDBContext extends DBContext<Lecture> {
                 l.setRoom(rs.getString("rname"));
                 l.setSlotId(rs.getInt("SlotID"));
                 l.setStatus(rs.getString("Status"));
+                l.setDate(rs.getDate("Date"));
                 lecture.add(l);
             }
         } catch (SQLException ex) {
@@ -101,7 +102,7 @@ public class LectureDBContext extends DBContext<Lecture> {
     public static void main(String[] args) {
         LectureDBContext l = new LectureDBContext();
         ArrayList<Lecture> le = l.allRollNumberDate("HE163665", Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
-        System.out.println(le.get(0).getCourse());
+        System.out.println(le.get(0).getDate());
     }
 
 }
