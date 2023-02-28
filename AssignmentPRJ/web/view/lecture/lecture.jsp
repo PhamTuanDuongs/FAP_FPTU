@@ -16,7 +16,7 @@
             table,tr,td{
                 border: 1px solid black;
             }
-        </style>
+        </style> 
     </head>
     <body>
         <!--        <div class="navigation">
