@@ -17,10 +17,11 @@ import model.User;
  *
  * @author sonnt
  */
-public abstract class BaseRequiredAuthenticatedController extends HttpServlet {
+public abstract class BaseRequiredAuthenticatedControllerForInstructor extends HttpServlet {
 
     private boolean isAuthenticated(HttpServletRequest request) {
-        return request.getSession().getAttribute("user") != null;
+        User u =  (User)request.getSession().getAttribute("user"); 
+         return u !=null && u.getRoleId() == 2;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

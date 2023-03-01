@@ -4,7 +4,7 @@
  */
 package controller.report;
 
-import controller.authentication.BaseRequiredAuthenticatedController;
+import controller.authentication.BaseRequiredAuthenticatedControllerForStudent;
 import dal.LectureDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ import model.User;
  *
  * @author duong
  */
-public class schedule extends BaseRequiredAuthenticatedController {
+public class schedule extends BaseRequiredAuthenticatedControllerForStudent {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
