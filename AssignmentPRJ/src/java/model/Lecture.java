@@ -11,54 +11,67 @@ import java.sql.Date;
  * @author duong
  */
 public class Lecture {
-    private String course;
-    private String room;
-    private String group;
+    private int lessonId;
+    private Course course;
+    private Room room;
+    private Group group;
+    private Instructor instructor;
     private String status;
-    private int slotId;
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    private TimeSlot slotId;
     private Date date;
 
     public Lecture() {
     }
 
-    public Lecture(String course, String room, String group, String status, int slotId) {
+    public Lecture(int lessonId, Course course, Room room, Group group, Instructor instructor, String status, TimeSlot slotId, Date date) {
+        this.lessonId = lessonId;
         this.course = course;
         this.room = room;
         this.group = group;
+        this.instructor = instructor;
         this.status = status;
         this.slotId = slotId;
+        this.date = date;
     }
 
-    public String getCourse() {
+    public int getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(String course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 
-    public String getRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public void setRoom(String room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 
-    public String getGroup() {
+    public Group getGroup() {
         return group;
     }
 
-    public void setGroup(String group) {
+    public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 
     public String getStatus() {
@@ -69,13 +82,22 @@ public class Lecture {
         this.status = status;
     }
 
-    public int getSlotId() {
+    public TimeSlot getSlotId() {
         return slotId;
     }
 
-    public void setSlotId(int slotId) {
+    public void setSlotId(TimeSlot slotId) {
         this.slotId = slotId;
     }
-    
-    
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+
+   
 }
