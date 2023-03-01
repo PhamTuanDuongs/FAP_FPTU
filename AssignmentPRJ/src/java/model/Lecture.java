@@ -11,11 +11,12 @@ import java.sql.Date;
  * @author duong
  */
 public class Lecture {
+
     private int lessonId;
     private Course course;
     private Room room;
     private Group group;
-    private Instructor instructor;
+    private String instructor;
     private String status;
     private TimeSlot slotId;
     private Date date;
@@ -23,7 +24,7 @@ public class Lecture {
     public Lecture() {
     }
 
-    public Lecture(int lessonId, Course course, Room room, Group group, Instructor instructor, String status, TimeSlot slotId, Date date) {
+    public Lecture(int lessonId, Course course, Room room, Group group, String instructor, String status, TimeSlot slotId, Date date) {
         this.lessonId = lessonId;
         this.course = course;
         this.room = room;
@@ -66,11 +67,11 @@ public class Lecture {
         this.group = group;
     }
 
-    public Instructor getInstructor() {
+    public String getInstructor() {
         return instructor;
     }
 
-    public void setInstructor(Instructor instructor) {
+    public void setInstructor(String instructor) {
         this.instructor = instructor;
     }
 
@@ -98,6 +99,4 @@ public class Lecture {
         this.date = date;
     }
 
-
-   
 }
