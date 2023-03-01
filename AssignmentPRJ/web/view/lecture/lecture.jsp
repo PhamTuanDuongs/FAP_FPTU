@@ -58,20 +58,21 @@
         <div class="form">
             <form action="schedule" method="POST">
                 <label>Lecturer</label>
-                <input type="text" name="rollnumber" /><br>
+                <input type="hidden" name="std" value="${sessionScope.user.studentId}">
                 <label>From:</label>
                 <input type="date" name="dateFrom" />
                 <label>To:</label>
                 <input type="date" name="dateTo" />
                 <input type="submit" value="View" />
             </form>
+            
         </div>
 
         <table>
             <tr>
                 <td></td>
                 <c:forEach items="${requestScope.schedule}" var="l">
-                    <c:if test="${l.slotId eq 1}">  
+                    <c:if test="${l.timeSlot.slotId eq 1}">  
                         <td><fmt:formatDate value="${l.date}" pattern="EEEE - dd - MMMM - yyyy" /></td>
                     </c:if> 
                 </c:forEach>
@@ -79,11 +80,10 @@
             <tr>
                 <td>Slot1 7:30-9h50</td>
                 <c:forEach items="${requestScope.schedule}" var="l">
-                    <c:if test="${l.slotId eq 1}">  
-                        <td>${l.group}<br>
-                            ${l.slotId}<br>
-                            ${l.course}<br>
-                            ${l.room}<br>
+                    <c:if test="${l.timeSlot.slotId eq 1}">  
+                        <td>${l.group.groupName}<br>
+                            ${l.course.code}<br>
+                            ${l.room.rname}<br>
                             ${l.status}</td>
                         </c:if> 
                     </c:forEach>
@@ -92,11 +92,10 @@
             <tr>
                 <td>Slot1 10h-12h20</td>
                 <c:forEach items="${requestScope.schedule}" var="l">
-                    <c:if test="${l.slotId eq 2}">  
-                        <td>${l.group}<br>
-                            ${l.slotId}<br>
-                            ${l.course}<br>
-                            ${l.room}<br>
+                    <c:if test="${l.timeSlot.slotId eq 2}">  
+                        <td>${l.group.groupName}<br>
+                            ${l.course.code}<br>
+                            ${l.room.rname}<br>
                             ${l.status}</td>
                         </c:if> 
                     </c:forEach>
@@ -105,9 +104,8 @@
             <tr>
                 <td>Slot1 12h50-15h10</td>
                 <c:forEach items="${requestScope.schedule}" var="l">
-                    <c:if test="${l.slotId eq 3}">  
+                    <c:if test="${l.timeSlot.slotId eq 3}">  
                         <td>${l.group}<br>
-                            ${l.slotId}<br>
                             ${l.course}<br>
                             ${l.room}<br>
                             ${l.status}</td>
@@ -118,9 +116,8 @@
             <tr>
                 <td>Slot1 15h20-17h40</td>
                 <c:forEach items="${requestScope.schedule}" var="l">
-                    <c:if test="${l.slotId eq 4}">  
+                    <c:if test="${l.timeSlot.slotId eq 4}">  
                         <td>${l.group}<br>
-                            ${l.slotId}<br>
                             ${l.course}<br>
                             ${l.room}<br>
                             ${l.status}</td>

@@ -11,25 +11,26 @@ import java.sql.Time;
  * @author duong
  */
 public class TimeSlot {
-    private int SlotId;
+
+    private int slotId;
     private Time timeFrom;
     private Time timeTo;
 
     public TimeSlot() {
     }
 
-    public TimeSlot(int SlotId, Time timeFrom, Time timeTo) {
-        this.SlotId = SlotId;
+    public TimeSlot(int slotId, Time timeFrom, Time timeTo) {
+        this.slotId = slotId;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
     }
 
     public int getSlotId() {
-        return SlotId;
+        return slotId;
     }
 
-    public void setSlotId(int SlotId) {
-        this.SlotId = SlotId;
+    public void setSlotId(int slotId) {
+        this.slotId = slotId;
     }
 
     public Time getTimeFrom() {
@@ -47,7 +48,5 @@ public class TimeSlot {
     public void setTimeTo(Time timeTo) {
         this.timeTo = timeTo;
     }
-    
-    
-    
+
 }

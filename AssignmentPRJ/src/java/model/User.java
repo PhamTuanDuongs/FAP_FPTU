@@ -13,8 +13,8 @@ public class User {
     private String username;
     private String password;
     private int roleId;
-    private int StudentId;
-    private int InstructorId;
+    private int studentId;
+    private int instructorId;
 
     public int getRoleId() {
         return roleId;
@@ -23,8 +23,6 @@ public class User {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
-
-   
 
     public String getUsername() {
         return username;
@@ -43,20 +41,19 @@ public class User {
     }
 
     public int getStudentId() {
-        return StudentId;
+        return studentId;
     }
 
-    public void setStudentId(int StudentId) {
-        this.StudentId = StudentId;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
     public int getInstructorId() {
-        return InstructorId;
+        return instructorId;
     }
 
-    public void setInstructorId(int InstructorId) {
-        this.InstructorId = InstructorId;
+    public void setInstructorId(int instructorId) {
+        this.instructorId = instructorId;
     }
- 
 
 }

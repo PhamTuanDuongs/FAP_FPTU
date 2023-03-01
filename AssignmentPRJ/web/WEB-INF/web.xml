@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>scheduleController</servlet-name>
-        <servlet-class>controller.report.schedule</servlet-class>
+        <servlet-class>controller.report.timetableForStudents</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>

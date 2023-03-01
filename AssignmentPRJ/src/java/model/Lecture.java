@@ -18,20 +18,20 @@ public class Lecture {
     private Group group;
     private String instructor;
     private String status;
-    private TimeSlot slotId;
+    private TimeSlot timeSlot;
     private Date date;
 
     public Lecture() {
     }
 
-    public Lecture(int lessonId, Course course, Room room, Group group, String instructor, String status, TimeSlot slotId, Date date) {
+    public Lecture(int lessonId, Course course, Room room, Group group, String instructor, String status, TimeSlot timeSlot, Date date) {
         this.lessonId = lessonId;
         this.course = course;
         this.room = room;
         this.group = group;
         this.instructor = instructor;
         this.status = status;
-        this.slotId = slotId;
+        this.timeSlot = timeSlot;
         this.date = date;
     }
 
@@ -83,14 +83,14 @@ public class Lecture {
         this.status = status;
     }
 
-    public TimeSlot getSlotId() {
-        return slotId;
+    public TimeSlot getTimeSlot() {
+        return timeSlot;
     }
 
-    public void setSlotId(TimeSlot slotId) {
-        this.slotId = slotId;
+    public void setTimeSlot(TimeSlot timeSlot) {
+        this.timeSlot = timeSlot;
     }
-
+ 
     public Date getDate() {
         return date;
     }

@@ -19,7 +19,7 @@ import model.User;
  *
  * @author duong
  */
-public class schedule extends BaseRequiredAuthenticatedControllerForStudent {
+public class timetableForStudents extends BaseRequiredAuthenticatedControllerForStudent {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
@@ -28,11 +28,11 @@ public class schedule extends BaseRequiredAuthenticatedControllerForStudent {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
-        String raw_rollnumer = request.getParameter("rollnumber");
+        String raw_std = request.getParameter("std");
         String raw_from = request.getParameter("dateFrom");
         String raw_to = request.getParameter("dateTo");
         LectureDBContext le = new LectureDBContext();
-        ArrayList<Lecture> l = le.allRollNumberDate(raw_rollnumer, Date.valueOf(raw_from), Date.valueOf(raw_to));
+        ArrayList<Lecture> l = le.timetable(Integer.parseInt(raw_std), Date.valueOf(raw_from), Date.valueOf(raw_to));
         request.setAttribute("schedule", l);
         request.getRequestDispatcher("view/lecture/lecture.jsp").forward(request, response);
     }
