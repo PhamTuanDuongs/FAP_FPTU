@@ -19,7 +19,7 @@ import model.User;
  *
  * @author duong
  */
-public class timetableForStudents extends BaseRequiredAuthenticatedControllerForStudent {
+public class timetableForStudentsController extends BaseRequiredAuthenticatedControllerForStudent {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
