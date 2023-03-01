@@ -48,7 +48,7 @@ public class LectureDBContext extends DBContext<Lecture> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public ArrayList<Lecture> allRollNumberDate(String rollNumer, Date from, Date to) {
+    public ArrayList<Lecture> timetable(int std, Date from, Date to) {
         ArrayList<Lecture> lecture = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -64,11 +64,11 @@ public class LectureDBContext extends DBContext<Lecture> {
                     + " on sg.StudentID = s.StudentID  \n"
                     + " inner join Attendance a on s.StudentID = a.StudentID inner join Instructor i\n" 
                     + "on l.InstructorID = i.InstructorID  \n"
-                    + " where s.Rollnumber = ? and l.[Date] between ? and ? \n"
+                    + " where s.StudentID = ? and l.[Date] between ? and ? \n"
                     + "group by l.LectureID,l.Date,c.CourseID,c.Code,c.Credit,r.RoomID,r.rname,\n"
-                    + "g.Name,t.SlotID,t.TimeFrom,t.TimeTo,g.GroupID,i.instrnumber,a.[Status]";
+                    + "g.Name,t.SlotID,t.TimeFrom,t.TimeTo,g.GroupID,i.instrnumber,a.[Status] ORDER BY l.Date";
             stm = connection.prepareStatement(sql);
-            stm.setString(1, rollNumer);
+            stm.setInt(1, std);
             stm.setDate(2, from);
             stm.setDate(3, to);
             rs = stm.executeQuery();
@@ -91,7 +91,7 @@ public class LectureDBContext extends DBContext<Lecture> {
                 t.setSlotId(rs.getInt("SlotID"));
                 t.setTimeFrom(rs.getTime("TimeFrom"));
                 t.setTimeTo(rs.getTime("TimeTo"));
-                l.setSlotId(t);
+                l.setTimeSlot(t);
                 Group g = new Group();
                 g.setCourse(c);
                 g.setGroupId(rs.getInt("GroupID"));
@@ -124,8 +124,8 @@ public class LectureDBContext extends DBContext<Lecture> {
     
     public static void main(String[] args) {
         LectureDBContext l = new LectureDBContext();
-        ArrayList<Lecture> le = l.allRollNumberDate("HE163665", Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
-        System.out.println(le.get(0).getInstructor());
+        ArrayList<Lecture> le = l.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
+        System.out.println(le.get(1).getDate());
     }
     
 }
