@@ -10,6 +10,7 @@ package model;
  */
 public class Course {
     private int courseId;
+    private String name;
     private String code;
     private int credit;
 
@@ -36,6 +37,14 @@ public class Course {
 
     public void setCredit(int credit) {
         this.credit = credit;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
     
 }
