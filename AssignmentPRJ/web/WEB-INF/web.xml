@@ -6,7 +6,11 @@
     </servlet>
     <servlet>
         <servlet-name>scheduleController</servlet-name>
-        <servlet-class>controller.report.timetableForStudents</servlet-class>
+        <servlet-class>controller.report.timetableForStudentsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>attendanceReportForStudentController</servlet-name>
+        <servlet-class>controller.report.attendancReportForStudentsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>scheduleController</servlet-name>
         <url-pattern>/schedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>attendanceReportForStudentController</servlet-name>
+        <url-pattern>/viewattendstudent</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
