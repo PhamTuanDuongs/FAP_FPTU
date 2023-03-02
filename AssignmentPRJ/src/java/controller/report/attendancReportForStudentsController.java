@@ -46,7 +46,7 @@ public class attendancReportForStudentsController extends BaseRequiredAuthentica
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
 }
