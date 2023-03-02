@@ -8,7 +8,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Course;
@@ -22,32 +24,32 @@ import model.TimeSlot;
  * @author duong
  */
 public class LectureDBContext extends DBContext<Lecture> {
-    
+
     @Override
     public void insert(Lecture model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void update(Lecture model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public void delete(Lecture model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public Lecture get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public ArrayList<Lecture> all() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     public ArrayList<Lecture> timetable(int std, Date from, Date to) {
         ArrayList<Lecture> lecture = new ArrayList<>();
         PreparedStatement stm = null;
@@ -62,7 +64,7 @@ public class LectureDBContext extends DBContext<Lecture> {
                     + "  on l.RoomID = r.RoomID inner join StudentGroup sg \n"
                     + " on sg.GroupID = g.GroupID inner join Student s \n"
                     + " on sg.StudentID = s.StudentID  \n"
-                    + " inner join Attendance a on s.StudentID = a.StudentID inner join Instructor i\n" 
+                    + " inner join Attendance a on s.StudentID = a.StudentID inner join Instructor i\n"
                     + "on l.InstructorID = i.InstructorID  \n"
                     + " where s.StudentID = ? and l.[Date] between ? and ? \n"
                     + "group by l.LectureID,l.Date,c.CourseID,c.Code,c.Credit,r.RoomID,r.rname,\n"
@@ -107,7 +109,7 @@ public class LectureDBContext extends DBContext<Lecture> {
             } catch (SQLException ex) {
                 Logger.getLogger(LectureDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 stm.close();
             } catch (SQLException ex) {
@@ -121,11 +123,33 @@ public class LectureDBContext extends DBContext<Lecture> {
         }
         return lecture;
     }
-    
+
     public static void main(String[] args) {
-        LectureDBContext l = new LectureDBContext();
-        ArrayList<Lecture> le = l.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
-        System.out.println(le.get(1).getDate());
+        ArrayList<String> date = getEachDayByWeek(12);
+        String dateFrom = date.get(0);
+        String dateTo = date.get(date.size() - 1);
+        LectureDBContext le = new LectureDBContext();
+        ArrayList<Lecture> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
+        if (l!=null) {
+            System.out.println(l.size());
+        }else{
+            
+        }
+//      
     }
-    
+      public static ArrayList<String> getEachDayByWeek(int weekNumber) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.WEEK_OF_YEAR, weekNumber);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        ArrayList<String> list = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for (int i = 0; i < 7; i++) {
+            String date;
+            date = sdf.format(cal.getTime());
+            list.add(date);
+            cal.add(Calendar.DATE, 1);
+        }
+        return list;
+    }
+
 }
