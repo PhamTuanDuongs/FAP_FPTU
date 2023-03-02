@@ -65,15 +65,55 @@
                 <input type="date" name="dateTo" />
                 <input type="submit" value="View" />
             </form>
-            
+
         </div>
 
         <table>
+            <thead>
+                <tr>
+                    <td>
+                        Year
+                        <select name="year">
+                            <c:set var="yearC" value="${requestScope.yearCurrent}"/>
+                            <c:forEach items="${requestScope.listYear}" var="year">
+                                <option value="${year}" ${year eq yearC ? 'selected' : ''}>${year}</option>
+                            </c:forEach>
+                        </select>
+                            ${yearC}
+                    </td>
+                    <td>Mon</td>
+                    <td>Tues</td>
+                    <td>Weds</td>
+                    <td>Thurs</td>
+                    <td>Fri</td>
+                    <td>Sun</td>
+                    <td>Sat</td>
+                </tr>
+                <tr>
+                    <td>
+                        Week:
+                        <select name="week">
+                            <c:set var="t" value="0"/>
+                            <c:set var="currentweek" value="${requestScope.current}"/>
+                            <c:forEach items="${requestScope.list}" var="week">
+                                <c:set var="t" value="${t+1}"/>
+                                <option value="${t}" ${ t eq currentweek ? 'selected':''}>${week}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <c:forEach items="${requestScope.days}" var="d">
+                        <td>${d}</td>
+                    </c:forEach>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+                            <table>
             <tr>
                 <td></td>
                 <c:forEach items="${requestScope.schedule}" var="l">
                     <c:if test="${l.timeSlot.slotId eq 1}">  
-                        <td><fmt:formatDate value="${l.date}" pattern="EEEE - dd - MMMM - yyyy" /></td>
+                        <td><fmt:formatDate value="${l.date}" pattern="dd - MM" /></td>
                     </c:if> 
                 </c:forEach>
             </tr>
@@ -127,6 +167,5 @@
             </tr>
 
         </table>
-
     </body>
 </html>
