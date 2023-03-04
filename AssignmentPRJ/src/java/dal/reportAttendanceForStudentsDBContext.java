@@ -50,20 +50,14 @@ public class reportAttendanceForStudentsDBContext extends DBContext<reportAttend
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select l.Date, g.Name,t.SlotID,t.TimeFrom,t.TimeTo,r.rname,r.RoomID,a.[Status],i.instrnumber,a.Comments\n"
-                    + "from\n"
-                    + "Lecture l join [Group] g\n"
-                    + "on l.GroupID = g.GroupID join TimeSlot t \n"
-                    + "on l.TimeSlotID = t.SlotID join Course c \n"
-                    + "on g.CourseID = c.CourseID join Room r\n"
-                    + "on l.RoomID = r.RoomID join StudentGroup sg \n"
-                    + "on sg.GroupID = g.GroupID join Student s \n"
-                    + "on sg.StudentID = s.StudentID join Attendance a \n"
-                    + "on s.StudentID = a.StudentID join Instructor i\n"
-                    + "on l.InstructorID = i.InstructorID\n"
-                    + "where s.StudentID  = ? and c.CourseID = ?\n"
-                    + "group by l.Date, g.Name,t.SlotID,t.TimeFrom,t.TimeTo,c.CourseID , c.Code,r.rname,r.RoomID,a.[Status],i.instrnumber,a.Comments\n"
-                    + "ORDER BY l.Date";
+            String sql = "select l.date, g.Name,c.Code,r.RoomID,r.rname,a.Status,a.comment,l.TimeSlotID,s.TimeFrom,s.TimeTo,i.instrnumber from Lecture l inner join Attendance a\n"
+                    + "on l.LectureID  = a.LectureID inner join [Group] g \n"
+                    + "on l.GroupID = g.GroupID join Course c on \n"
+                    + "g.CourseID = c.CourseID join Room r\n"
+                    + "on l.RoomID = r.RoomID join TimeSlot s\n"
+                    + "on l.TimeSlotID = s.SlotID join Instructor i \n"
+                    + "on i.InstructorID = l.InstructorID\n"
+                    + "where a.StudentID = ? and c.CourseID = ?";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, studentId);
             stm.setInt(2, courseId);
@@ -71,7 +65,7 @@ public class reportAttendanceForStudentsDBContext extends DBContext<reportAttend
             while (rs.next()) {
                 reportAttendanceForStudents attend = new reportAttendanceForStudents();
                 TimeSlot t = new TimeSlot();
-                t.setSlotId(rs.getInt("SlotID"));
+                t.setSlotId(rs.getInt("TimeSlotID"));
                 t.setTimeFrom(rs.getTime("TimeFrom"));
                 t.setTimeTo(rs.getTime("TimeTo"));
                 attend.setSlot(t);
@@ -79,9 +73,9 @@ public class reportAttendanceForStudentsDBContext extends DBContext<reportAttend
                 r.setRoomId(rs.getInt("RoomID"));
                 r.setRname(rs.getString("rname"));
                 attend.setRoom(r);
-                attend.setDate(rs.getDate("Date"));
+                attend.setDate(rs.getDate("date"));
                 attend.setStatus(rs.getString("Status"));
-                attend.setComment(rs.getString("Comments"));
+                attend.setComment(rs.getString("comment"));
                 attend.setInstructor(rs.getString("instrnumber"));
                 attend.setGroupName(rs.getString("Name"));
                 attendance.add(attend);
@@ -112,6 +106,6 @@ public class reportAttendanceForStudentsDBContext extends DBContext<reportAttend
     public static void main(String[] args) {
         reportAttendanceForStudentsDBContext e = new reportAttendanceForStudentsDBContext();
         ArrayList<reportAttendanceForStudents> attendance = e.allAttendanceByStidCoid(1, 19);
-        System.out.println(attendance.get(0).getComment());
+        System.out.println(attendance.get(0).getGroupName());
     }
 }
