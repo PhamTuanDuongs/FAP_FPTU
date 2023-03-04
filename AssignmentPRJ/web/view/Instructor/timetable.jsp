@@ -48,44 +48,6 @@
         </script>
     </head>
     <body>
-        <!--        <div class="navigation">
-                    <ul>
-                        <li class="list active">
-                            <a href="#">
-                                <span class="icon"><i class="fa-solid fa-user"></i></span>
-                                <span class="title">User</span>
-                            </a>
-                        </li>
-                        <li class="list">
-                            <a href="#">
-                                <span class="icon"><i class="fa-solid fa-calendar"></i></span>
-                                <span class="title">Weekly Timetable</span>
-                            </a>
-                        </li>
-                        <li class="list">
-                            <a href="#">
-                                <span class="icon"><i class="fa-solid fa-user-check"></i></span>
-                                <span class="title">Attendance Report</span>
-                            </a>
-                        </li>
-                        <li class="list">
-                            <a href="#">
-                                <span class="icon"><i class="fa-solid fa-clipboard-user"></i></span>
-                                <span class="title">Take attendance</span>
-                            </a>
-                        </li>
-                        <li class="list">
-                            <a href="#">
-                                <span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span>
-                                <span class="title">Sign Out</span>
-                            </a>
-                        </li>
-                    </ul>
-        
-                    <div class="toggle"></div>
-                </div>-->
-       
-
         <table>
             <thead>
 
