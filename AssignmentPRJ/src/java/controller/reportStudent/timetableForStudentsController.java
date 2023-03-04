@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.sql.Date;
 import java.util.ArrayList;
-import model.Lecture;
+import model.LectureForStudent;
 import model.User;
 
 /**
@@ -81,7 +81,7 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
             String dateFrom = allDay.get(0);
             String dateTo = allDay.get(allDay.size() - 1);
             LectureDBContext le = new LectureDBContext();
-            ArrayList<Lecture> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            ArrayList<LectureForStudent> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
             if (l == null) {
 
             } else {
@@ -94,7 +94,7 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
             String dateTo = date.get(date.size() - 1);
             LectureDBContext le = new LectureDBContext();
             User user = (User) req.getSession().getAttribute("user");
-            ArrayList<Lecture> l = le.timetable(user.getStudentId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            ArrayList<LectureForStudent> l = le.timetable(user.getStudentId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
             if (l == null) {
 
             } else {

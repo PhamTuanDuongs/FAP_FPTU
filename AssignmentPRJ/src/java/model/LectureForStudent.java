@@ -10,7 +10,7 @@ import java.sql.Date;
  *
  * @author duong
  */
-public class Lecture {
+public class LectureForStudent {
 
     private String groupName;
     private String course;
@@ -19,10 +19,10 @@ public class Lecture {
     private int slot;
     private int weekDay;
 
-    public Lecture() {
+    public LectureForStudent() {
     }
 
-    public Lecture(String groupName, String course, String rname, String status, int slot, int weekDay) {
+    public LectureForStudent(String groupName, String course, String rname, String status, int slot, int weekDay) {
         this.groupName = groupName;
         this.course = course;
         this.rname = rname;

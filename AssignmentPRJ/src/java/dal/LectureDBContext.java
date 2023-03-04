@@ -13,41 +13,41 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Lecture;
+import model.LectureForStudent;
 
 /**
  *
  * @author duong
  */
-public class LectureDBContext extends DBContext<Lecture> {
+public class LectureDBContext extends DBContext<LectureForStudent> {
 
     @Override
-    public void insert(Lecture model) {
+    public void insert(LectureForStudent model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void update(Lecture model) {
+    public void update(LectureForStudent model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void delete(Lecture model) {
+    public void delete(LectureForStudent model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Lecture get(int id) {
+    public LectureForStudent get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ArrayList<Lecture> all() {
+    public ArrayList<LectureForStudent> all() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public ArrayList<Lecture> timetable(int std, Date from, Date to) {
-        ArrayList<Lecture> lecture = new ArrayList<>();
+    public ArrayList<LectureForStudent> timetable(int std, Date from, Date to) {
+        ArrayList<LectureForStudent> lecture = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
@@ -64,7 +64,7 @@ public class LectureDBContext extends DBContext<Lecture> {
             stm.setDate(3, to);
             rs = stm.executeQuery();
             while (rs.next()) {
-                Lecture l = new Lecture();
+                LectureForStudent l = new LectureForStudent();
                 l.setGroupName(rs.getString("Name"));
                 l.setCourse(rs.getString("Code"));
                 l.setRname(rs.getString("rname"));
@@ -108,7 +108,7 @@ public class LectureDBContext extends DBContext<Lecture> {
 //
 //        }
         LectureDBContext le = new LectureDBContext();
-        ArrayList<Lecture> l = le.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
+        ArrayList<LectureForStudent> l = le.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
         System.out.println(l.size());
 
     }
