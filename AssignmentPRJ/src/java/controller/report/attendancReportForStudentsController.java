@@ -25,14 +25,20 @@ public class attendancReportForStudentsController extends BaseRequiredAuthentica
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User u = (User) request.getSession().getAttribute("user");
         CourseDBContext c = new CourseDBContext();
-        ArrayList<Course> course = c.allCourseByStudentId(1);
+        User user = (User)request.getSession().getAttribute("user");
+        ArrayList<Course> course = c.allCourseByStudentId(user.getStudentId());
         request.setAttribute("course", course);
 
-        String raw_std = request.getParameter("std");
-        String raw_course = request.getParameter("cid");
+        String raw_std = request.getParameter("studenId");
+        String raw_course = request.getParameter("courseId");
         if (raw_std != null && raw_course != null) {
             reportAttendanceForStudentsDBContext r = new reportAttendanceForStudentsDBContext();
             ArrayList<reportAttendanceForStudents> attendance = r.allAttendanceByStidCoid(Integer.parseInt(raw_std), Integer.parseInt(raw_course));
+            request.setAttribute("courseid", Integer.parseInt(raw_course));
+            request.setAttribute("attendance", attendance);
+        }else{
+            reportAttendanceForStudentsDBContext r = new reportAttendanceForStudentsDBContext();
+            ArrayList<reportAttendanceForStudents> attendance = r.allAttendanceByStidCoid(user.getStudentId(), course.get(0).getCourseId());
             request.setAttribute("attendance", attendance);
         }
         request.getRequestDispatcher("view/student/attendancereport.jsp").forward(request, response);
