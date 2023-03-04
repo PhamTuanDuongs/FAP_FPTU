@@ -6,11 +6,11 @@
     </servlet>
     <servlet>
         <servlet-name>scheduleController</servlet-name>
-        <servlet-class>controller.report.timetableForStudentsController</servlet-class>
+        <servlet-class>controller.reportStudent.timetableForStudentsController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>attendanceReportForStudentController</servlet-name>
-        <servlet-class>controller.report.attendancReportForStudentsController</servlet-class>
+        <servlet-class>controller.reportStudent.attendancReportForStudentsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
