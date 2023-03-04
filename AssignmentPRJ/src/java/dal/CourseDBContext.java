@@ -49,19 +49,11 @@ public class CourseDBContext extends DBContext<Course> {
         ResultSet rs = null;
 
         try {
-            String sql = "select  c.Code,c.CourseID,c.Credit,c.Description,c.Name\n"
-                    + "from\n"
-                    + "Lecture l join [Group] g\n"
-                    + "on l.GroupID = g.GroupID join TimeSlot t \n"
-                    + "on l.TimeSlotID = t.SlotID join Course c \n"
-                    + "on g.CourseID = c.CourseID join Room r\n"
-                    + "on l.RoomID = r.RoomID join StudentGroup sg \n"
-                    + "on sg.GroupID = g.GroupID join Student s \n"
-                    + "on sg.StudentID = s.StudentID join Attendance a \n"
-                    + "on s.StudentID = a.StudentID join Instructor i\n"
-                    + "on l.InstructorID = i.InstructorID\n"
-                    + "where s.StudentID  = ?\n"
-                    + "group by c.Code,c.CourseID,c.Credit,c.Description,c.Name";
+            String sql = "select c.Code,c.CourseID,g.Name as 'namegroup',l.Date,c.Credit,c.Name from Lecture l inner join [Group] g\n"
+                    + "on l.LectureID  = g.GroupID join Course c\n"
+                    + "on g.CourseID = c.CourseID join StudentGroup s\n"
+                    + "on g.GroupID = s.GroupID \n"
+                    + "where s.StudentID = ?";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             rs = stm.executeQuery();
@@ -71,6 +63,8 @@ public class CourseDBContext extends DBContext<Course> {
                 c.setCourseId(rs.getInt("CourseID"));
                 c.setCredit(rs.getInt("Credit"));
                 c.setName(rs.getString("Name"));
+                c.setDate(rs.getDate("Date"));
+                c.setGroupname(rs.getString("namegroup"));
                 course.add(c);
             }
         } catch (SQLException ex) {
@@ -95,14 +89,12 @@ public class CourseDBContext extends DBContext<Course> {
         }
         return course;
     }
-    
+
     public static void main(String[] args) {
         CourseDBContext c = new CourseDBContext();
-         ArrayList<Course> course = c.allCourseByStudentId(1);
-         System.out.println(course.get(0).getName());
-         System.out.println(course.get(1).getName());
-         System.out.println(course.get(2).getName());
-         System.out.println(course.get(3).getName());
+        ArrayList<Course> course = c.allCourseByStudentId(1);
+        System.out.println(course.get(0).getName());
+       
     }
 
 }
