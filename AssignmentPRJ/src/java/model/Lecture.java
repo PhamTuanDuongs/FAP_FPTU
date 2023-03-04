@@ -12,67 +12,55 @@ import java.sql.Date;
  */
 public class Lecture {
 
-    private int lessonId;
-    private Course course;
-    private Room room;
-    private Group group;
-    private String instructor;
+    private String groupName;
+    private String course;
+    private String rname;
     private String status;
-    private TimeSlot timeSlot;
-    private Date date;
+    private int slot;
+    private int weekDay;
 
     public Lecture() {
     }
 
-    public Lecture(int lessonId, Course course, Room room, Group group, String instructor, String status, TimeSlot timeSlot, Date date) {
-        this.lessonId = lessonId;
+    public Lecture(String groupName, String course, String rname, String status, int slot, int weekDay) {
+        this.groupName = groupName;
         this.course = course;
-        this.room = room;
-        this.group = group;
-        this.instructor = instructor;
+        this.rname = rname;
         this.status = status;
-        this.timeSlot = timeSlot;
-        this.date = date;
+        this.slot = slot;
+        this.weekDay = weekDay;
     }
 
-    public int getLessonId() {
-        return lessonId;
+    public int getWeekDay() {
+        return weekDay;
     }
 
-    public void setLessonId(int lessonId) {
-        this.lessonId = lessonId;
+    public void setWeekDay(int weekDay) {
+        this.weekDay = weekDay;
     }
 
-    public Course getCourse() {
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(String course) {
         this.course = course;
     }
 
-    public Room getRoom() {
-        return room;
+    public String getRname() {
+        return rname;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public String getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
+    public void setRname(String rname) {
+        this.rname = rname;
     }
 
     public String getStatus() {
@@ -83,20 +71,12 @@ public class Lecture {
         this.status = status;
     }
 
-    public TimeSlot getTimeSlot() {
-        return timeSlot;
+    public int getSlot() {
+        return slot;
     }
 
-    public void setTimeSlot(TimeSlot timeSlot) {
-        this.timeSlot = timeSlot;
-    }
- 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setSlot(int slot) {
+        this.slot = slot;
     }
 
 }
