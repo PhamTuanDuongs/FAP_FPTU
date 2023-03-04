@@ -13,11 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Course;
-import model.Group;
 import model.Lecture;
-import model.Room;
-import model.TimeSlot;
 
 /**
  *
@@ -55,20 +51,13 @@ public class LectureDBContext extends DBContext<Lecture> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "Select l.LectureID,l.[Date],c.CourseID,c.Code,c.Credit,r.RoomID,r.rname,\n"
-                    + "g.Name,t.SlotID,t.TimeFrom,t.TimeTo,g.GroupID,i.instrnumber,a.[Status] from \n"
-                    + " Lecture l inner join [Group] g \n"
-                    + "on l.GroupID = g.GroupID inner join TimeSlot t \n"
-                    + " on l.TimeSlotID = t.SlotID inner join Course c\n"
-                    + " on g.CourseID = c.CourseID inner join Room r\n"
-                    + "  on l.RoomID = r.RoomID inner join StudentGroup sg \n"
-                    + " on sg.GroupID = g.GroupID inner join Student s \n"
-                    + " on sg.StudentID = s.StudentID  \n"
-                    + " inner join Attendance a on s.StudentID = a.StudentID inner join Instructor i\n"
-                    + "on l.InstructorID = i.InstructorID  \n"
-                    + " where s.StudentID = ? and l.[Date] between ? and ? \n"
-                    + "group by l.LectureID,l.Date,c.CourseID,c.Code,c.Credit,r.RoomID,r.rname,\n"
-                    + "g.Name,t.SlotID,t.TimeFrom,t.TimeTo,g.GroupID,i.instrnumber,a.[Status] ORDER BY l.Date";
+            String sql = "select g.Name,c.Code,r.rname,a.Status,l.TimeSlotID,DATEPART(WEEKDAY,Date) as WeekDay from Lecture l inner join Attendance a\n"
+                    + "on l.LectureID  = a.LectureID inner join [Group] g \n"
+                    + "on l.GroupID = g.GroupID join Course c on \n"
+                    + "g.CourseID = c.CourseID join Room r\n"
+                    + "on l.RoomID = r.RoomID join TimeSlot s\n"
+                    + "on l.TimeSlotID = s.SlotID\n"
+                    + "where a.StudentID = ? and l.[Date] between ? and ?";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, std);
             stm.setDate(2, from);
@@ -76,29 +65,12 @@ public class LectureDBContext extends DBContext<Lecture> {
             rs = stm.executeQuery();
             while (rs.next()) {
                 Lecture l = new Lecture();
-                l.setDate(rs.getDate("Date"));
-                l.setInstructor(rs.getString("instrnumber"));
+                l.setGroupName(rs.getString("Name"));
+                l.setCourse(rs.getString("Code"));
+                l.setRname(rs.getString("rname"));
                 l.setStatus(rs.getString("Status"));
-                l.setLessonId(rs.getInt("LectureID"));
-                Course c = new Course();
-                c.setCourseId(rs.getInt("CourseID"));
-                c.setCode(rs.getString("Code"));
-                c.setCredit(rs.getInt("Credit"));
-                l.setCourse(c);
-                Room r = new Room();
-                r.setRoomId(rs.getInt("RoomID"));
-                r.setRname(rs.getString("rname"));
-                l.setRoom(r);
-                TimeSlot t = new TimeSlot();
-                t.setSlotId(rs.getInt("SlotID"));
-                t.setTimeFrom(rs.getTime("TimeFrom"));
-                t.setTimeTo(rs.getTime("TimeTo"));
-                l.setTimeSlot(t);
-                Group g = new Group();
-                g.setCourse(c);
-                g.setGroupId(rs.getInt("GroupID"));
-                g.setGroupName(rs.getString("Name"));
-                l.setGroup(g);
+                l.setSlot(rs.getInt("TimeSlotID"));
+                l.setWeekDay(rs.getInt("WeekDay"));
                 lecture.add(l);
             }
         } catch (SQLException ex) {
@@ -125,19 +97,23 @@ public class LectureDBContext extends DBContext<Lecture> {
     }
 
     public static void main(String[] args) {
-        ArrayList<String> date = getEachDayByWeek(12);
-        String dateFrom = date.get(0);
-        String dateTo = date.get(date.size() - 1);
+//        ArrayList<String> date = getEachDayByWeek(12);
+//        String dateFrom = date.get(0);
+//        String dateTo = date.get(date.size() - 1);
+//        LectureDBContext le = new LectureDBContext();
+//        ArrayList<Lecture> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
+//        if (l != null) {
+//            System.out.println(l.size());
+//        } else {
+//
+//        }
         LectureDBContext le = new LectureDBContext();
-        ArrayList<Lecture> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
-        if (l!=null) {
-            System.out.println(l.size());
-        }else{
-            
-        }
-//      
+        ArrayList<Lecture> l = le.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
+        System.out.println(l.size());
+
     }
-      public static ArrayList<String> getEachDayByWeek(int weekNumber) {
+
+    public static ArrayList<String> getEachDayByWeek(int weekNumber) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.WEEK_OF_YEAR, weekNumber);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
