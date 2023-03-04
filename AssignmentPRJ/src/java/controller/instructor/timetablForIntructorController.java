@@ -5,23 +5,27 @@
 package controller.instructor;
 
 import controller.authentication.BaseRequiredAuthenticatedControllerForInstructor;
+import dal.timetableForInstructorDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import model.Lecture;
 import model.User;
 
 /**
  *
  * @author duong
  */
-public class timetablForIntructorController extends BaseRequiredAuthenticatedControllerForInstructor{
-     protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+public class timetablForIntructorController extends BaseRequiredAuthenticatedControllerForInstructor {
+
+    protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String raw_week = req.getParameter("week");
         String year_raw = req.getParameter("year");
         LocalDate currentdate = LocalDate.now();
@@ -64,13 +68,42 @@ public class timetablForIntructorController extends BaseRequiredAuthenticatedCon
                 req.setAttribute("yearCurrent", currentYear);
                 req.setAttribute("days", allDay);
             }
-        } 
-        
-        
-         
-     }
-     
-      private int getCurrentWeek() {
+        }
+
+        if (raw_week != null) {
+            ArrayList<String> allDay = getEachDayByWeekIndb(Integer.parseInt(raw_week), currentYear);
+            String dateFrom = allDay.get(0);
+            String dateTo = allDay.get(allDay.size() - 1);
+            timetableForInstructorDBContext t = new timetableForInstructorDBContext();
+            User user = (User) req.getSession().getAttribute("user");
+            ArrayList<Lecture> l = t.allSlotInWeek(user.getInstructorId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            if (l == null) {
+
+            } else {
+                req.setAttribute("schedule", l);
+            }
+        } else {
+            int currentw = getCurrentWeek();
+            ArrayList<String> date = getEachDayByWeekIndb(currentw, currentYear);
+            String dateFrom = date.get(0);
+            String dateTo = date.get(date.size() - 1);
+            timetableForInstructorDBContext t = new timetableForInstructorDBContext();
+            User user = (User) req.getSession().getAttribute("user");
+            ArrayList<Lecture> l = t.allSlotInWeek(user.getInstructorId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
+
+            if (l == null) {
+
+            } else {
+                req.setAttribute("schedule", l);
+            }
+
+        }
+
+        req.getRequestDispatcher("view/Instructor/timetable.jsp").forward(req, resp);
+
+    }
+
+    private int getCurrentWeek() {
         Calendar cal = Calendar.getInstance();
         int currentWeek = cal.get(Calendar.WEEK_OF_YEAR);
         return currentWeek;
@@ -152,5 +185,5 @@ public class timetablForIntructorController extends BaseRequiredAuthenticatedCon
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
 }

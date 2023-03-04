@@ -98,6 +98,10 @@ public class timetableForInstructorDBContext extends DBContext<Lecture> {
     public static void main(String[] args) {
         timetableForInstructorDBContext t = new timetableForInstructorDBContext();
         ArrayList<Lecture> lecture = t.allSlotInWeek(6, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
-        System.out.println(lecture.get(0).getSlot());
+        for (int i = 0; i < lecture.size(); i++) {
+        System.out.println(lecture.get(i).getCourse());
+        System.out.println(lecture.get(i).getSlot());
+            
+        }
     }
 }
