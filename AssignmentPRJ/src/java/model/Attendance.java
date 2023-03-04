@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 public class Attendance {
 
     private Student student;
-    private LectureForStudent lecture;
+    private Lecture lecture;
     private String status;
     private String comment;
     private TimeSlot slot;
@@ -24,7 +24,7 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(Student student, LectureForStudent lecture, String status, String comment, TimeSlot slot, Timestamp recordTime, Room room, Course course) {
+    public Attendance(Student student, Lecture lecture, String status, String comment, TimeSlot slot, Timestamp recordTime, Room room, Course course) {
         this.student = student;
         this.lecture = lecture;
         this.status = status;
@@ -67,11 +67,11 @@ public class Attendance {
         this.student = student;
     }
 
-    public LectureForStudent getLecture() {
+    public Lecture getLecture() {
         return lecture;
     }
 
-    public void setLecture(LectureForStudent Lecture) {
+    public void setLecture(Lecture Lecture) {
         this.lecture = Lecture;
     }
 
