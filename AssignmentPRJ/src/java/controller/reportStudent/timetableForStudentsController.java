@@ -81,7 +81,8 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
             String dateFrom = allDay.get(0);
             String dateTo = allDay.get(allDay.size() - 1);
             LectureDBContext le = new LectureDBContext();
-            ArrayList<Lecture> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            User user = (User) req.getSession().getAttribute("user");
+            ArrayList<Lecture> l = le.timetable(user.getStudentId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
             if (l == null) {
 
             } else {
