@@ -26,10 +26,11 @@ import model.User;
 public class timetableForStudentsController extends BaseRequiredAuthenticatedControllerForStudent {
 
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String dateInput = req.getParameter("date");
+        String raw_week = req.getParameter("week");
         String year_raw = req.getParameter("year");
         LocalDate currentdate = LocalDate.now();
         int currentYear = currentdate.getYear();
+        int currYearrr = currentdate.getYear();
         int[] listYear = {2021, 2022, 2023, 2024};
         req.setAttribute("listYear", listYear);
         ArrayList<String> list = new ArrayList<>();
@@ -37,49 +38,72 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
             // get current year
             list = getAllDayWeek(currentYear);
         } else {
+            // get year when year_raw not null
             currentYear = Integer.parseInt(year_raw);
             list = getAllDayWeek(currentYear);
         }
         req.setAttribute("yearCurrent", currentYear);
         req.setAttribute("list", list);
-        if (req.getParameter("date") == null || dateInput == "2023") {
+        if (raw_week == null || currentYear == currYearrr) {
             int currentWeek = getCurrentWeek();
-            ArrayList<String> allDay = getEachDayByWeek(currentWeek);
+            ArrayList<String> allDay = getEachDayByWeek(currentWeek, currentYear);
             req.setAttribute("current", currentWeek);
             req.setAttribute("days", allDay);
-        } else {
-            ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(dateInput));
-            req.setAttribute("days", allDay);
+        } else if (currentYear == currYearrr) {
+            if (raw_week != null) {
+                ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
+                req.setAttribute("current", Integer.parseInt(raw_week));
+                req.setAttribute("yearCurrent", currentYear);
+                req.setAttribute("days", allDay);
+            }
+        } else if (currentYear != currYearrr) {
+            if (raw_week != null && currentYear != currYearrr) {
+                ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
+                req.setAttribute("current", Integer.parseInt(raw_week));
+                req.setAttribute("yearCurrent", currentYear);
+                req.setAttribute("days", allDay);
+            } else {
+                ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
+                req.setAttribute("current", 1);
+                req.setAttribute("yearCurrent", currentYear);
+                req.setAttribute("days", allDay);
+            }
         }
 
-        String raw_week = req.getParameter("weekId");
+//        if () {
+//            ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
+//            req.setAttribute("current", Integer.parseInt(raw_week));
+//            req.setAttribute("yearCurrent", currentYear);
+//            req.setAttribute("days", allDay);
+//        }
         if (raw_week != null) {
-            ArrayList<String> date = getEachDayByWeekIndb(Integer.parseInt(raw_week));
-            String dateFrom = date.get(0);
-            String dateTo = date.get(date.size() - 1);
+            ArrayList<String> allDay = getEachDayByWeekIndb(Integer.parseInt(raw_week), currentYear);
+            String dateFrom = allDay.get(0);
+            String dateTo = allDay.get(allDay.size() - 1);
             LectureDBContext le = new LectureDBContext();
             ArrayList<Lecture> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
             if (l == null) {
-                 
+
             } else {
-                  req.setAttribute("schedule", l);
+                req.setAttribute("schedule", l);
             }
         } else {
             int currentw = getCurrentWeek();
-            ArrayList<String> date = getEachDayByWeekIndb(13);
+            ArrayList<String> date = getEachDayByWeekIndb(currentw, currentYear);
             String dateFrom = date.get(0);
             String dateTo = date.get(date.size() - 1);
             LectureDBContext le = new LectureDBContext();
-            ArrayList<Lecture> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            User user = (User) req.getSession().getAttribute("user");
+            ArrayList<Lecture> l = le.timetable(user.getStudentId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
             if (l == null) {
-                 
+
             } else {
-                  req.setAttribute("schedule", l);
+                req.setAttribute("schedule", l);
             }
-          
+
         }
 
-        req.getRequestDispatcher("view/lecture/lecture.jsp").forward(req, resp);
+        req.getRequestDispatcher("view/student/timetable.jsp").forward(req, resp);
     }
 
     private int getCurrentWeek() {
@@ -107,14 +131,13 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
     private ArrayList<String> getAllDayWeek(int year) {
         ArrayList<String> list = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        int totalWeek = getTotalWeeksInYear(2023);
+        int totalWeek = getTotalWeeksInYear(year);
         for (int i = 1; i <= totalWeek; i++) {
             Calendar cal = Calendar.getInstance(Locale.GERMANY);
             cal.set(Calendar.YEAR, year);
             cal.set(Calendar.WEEK_OF_YEAR, i);
             cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             String weekday = "";
-//        resp.getWriter().print(sdf.format(cal.getTime()));
             weekday = weekday + sdf.format(cal.getTime()) + "/";
             cal.add(Calendar.DATE, 6);
             weekday += sdf.format(cal.getTime());
@@ -124,8 +147,9 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
 
     }
 
-    private ArrayList<String> getEachDayByWeek(int weekNumber) {
+    private ArrayList<String> getEachDayByWeek(int weekNumber, int year) {
         Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
         cal.set(Calendar.WEEK_OF_YEAR, weekNumber);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         ArrayList<String> list = new ArrayList<>();
@@ -139,8 +163,9 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
         return list;
     }
 
-    private ArrayList<String> getEachDayByWeekIndb(int weekNumber) {
+    private ArrayList<String> getEachDayByWeekIndb(int weekNumber, int year) {
         Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
         cal.set(Calendar.WEEK_OF_YEAR, weekNumber);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         ArrayList<String> list = new ArrayList<>();
