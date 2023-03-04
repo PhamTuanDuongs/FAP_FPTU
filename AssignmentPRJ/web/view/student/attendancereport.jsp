@@ -11,8 +11,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Attendance Report</title>
         <style>
+            *{
+                margin: 0;
+                border: 0;
+                padding: 0;
+            }
             table,thead,th,tbody,tr,td{
                 border: 1px solid black;
             }
@@ -20,32 +25,49 @@
                 background-color: #655DBB;
             }
             th{
-                 width: 300px;
-                 height: 50px;
+                width: 300px;
+                height: 50px;
             }
             .timetable{
                 width: 66rem;
-                margin-left:400px;
+                margin-left:350px;
                 margin-top:30px;
                 border: 1px solid red;
             }
             .formm{
                 width: 700px;
-                margin-left:500px;
-                margin-top:30px;
+                margin-left:350px;
+            }
+            select {
+                border:1px solid black;
+            }
+            .submit{
+                margin-left: 3px;
+                padding: 3px;
+                background-color: #A084DC;
+                color: white;
+                cursor: pointer;
+            }
+            .title{
+                padding-left: 23rem;
+                height: 100px;
+                display:flex;
+                align-items: center;
             }
         </style>
     </head>
     <body>
+        <%--<%@ include file = "sideBar.jsp" %>--%>
+        <!--<div class="title"><h1>FPT University Academic Portal</h1></div>-->        
         <div class="formm">
             <form action="viewattendstudent" method="GET">
                 <input type="hidden" name="studenId" value="${sessionScope.user.studentId}">
-              Choose the course: <select name="courseId">
+                Choose the course: <select name="courseId">
                     <c:forEach items="${requestScope.course}" var="c">
                         <c:set var="course" value="${requestScope.courseid}"/>
                         <option value="${c.courseId}"  ${course == c.courseId ? 'selected':''}   >${c.name}(${c.code})(${c.groupname},start ${c.date} )</option>
                     </c:forEach>
-                    <input type="submit" value="View" />
+                    <input class="submit" type="submit" value="View" />
                 </select> 
             </form>
         </div>
@@ -67,8 +89,8 @@
                         <c:set var="t" value="0"/>
                         <c:forEach items="${requestScope.attendance}" var="a">
                             <tr>
-                                 <c:set var="t" value="${t+1}"/>
-                                 <td>${t}</td>
+                                <c:set var="t" value="${t+1}"/>
+                                <td>${t}</td>
                                 <td><fmt:formatDate value="${a.date}" pattern="EEEE dd/MMMM/yyyy" /></td>
                                 <td>${a.slot.slotId}_(${a.slot.timeFrom}-${a.slot.timeTo})</td>
                                 <td>${a.room.rname}</td>
