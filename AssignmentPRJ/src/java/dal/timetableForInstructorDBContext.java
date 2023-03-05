@@ -49,14 +49,12 @@ public class timetableForInstructorDBContext extends DBContext<Lecture> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select g.Name,c.Code,r.rname,a.Status,l.TimeSlotID, DATEPART(WEEKDAY,Date) as WeekDay from Lecture l inner join Attendance a\n"
-                    + "on l.LectureID  = a.LectureID inner join Instructor i on i.InstructorId = l.InstructorID\n"
-                    + "inner join [Group] g \n"
-                    + "on l.GroupID = g.GroupID join Course c on \n"
-                    + "g.CourseID = c.CourseID join Room r\n"
-                    + "on l.RoomID = r.RoomID join TimeSlot s \n"
-                    + "on l.TimeSlotID = s.SlotID\n"
-                    + "where l.InstructorID = ? and l.[Date] between ? and ?";
+            String sql = "select l.TimeSlotID,g.Name,c.Code,r.rname,l.LecStatus, DATEPART(WEEKDAY,Date) as WeekDay from\n"
+                    + "Lecture l inner join [Group] g\n"
+                    + "on g.GroupID = l.GroupID inner join Course c\n"
+                    + "on g.CourseID = c.CourseID inner join Room r \n"
+                    + "on l.RoomID = r.RoomID  \n"
+                    + "where l.InstructorID = ? and l.Date between ? and ? ";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, instructorId);
             stm.setDate(2, from);
@@ -67,7 +65,7 @@ public class timetableForInstructorDBContext extends DBContext<Lecture> {
                 l.setGroupName(rs.getString("Name"));
                 l.setCourse(rs.getString("Code"));
                 l.setRname(rs.getString("rname"));
-                l.setStatus(rs.getString("Status"));
+                l.setStatus(rs.getString("LecStatus"));
                 l.setSlot(rs.getInt("TimeSlotID"));
                 l.setWeekDay(rs.getInt("WeekDay"));
                 lecture.add(l);
@@ -94,14 +92,14 @@ public class timetableForInstructorDBContext extends DBContext<Lecture> {
         }
         return lecture;
     }
-    
+
     public static void main(String[] args) {
         timetableForInstructorDBContext t = new timetableForInstructorDBContext();
         ArrayList<Lecture> lecture = t.allSlotInWeek(6, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
         for (int i = 0; i < lecture.size(); i++) {
-        System.out.println(lecture.get(i).getCourse());
-        System.out.println(lecture.get(i).getSlot());
-            
+            System.out.println(lecture.get(i).getCourse());
+            System.out.println(lecture.get(i).getSlot());
+
         }
     }
 }
