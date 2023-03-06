@@ -35,41 +35,22 @@
                 border: 0;
                 padding: 0;
             }
-            
-             .timetable{
+
+            .timetable{
                 width: 70rem;
                 margin-left:300px;
                 margin-top:100px;
                 border: 1px solid red;
             }
-            
-             .title{
+
+            .title{
                 padding-left: 23rem;
                 height: 100px;
                 display:flex;
                 align-items: center;
             }
         </style> 
-        <script>
-            var url = "http://localhost:9999/fap/schedule";
-            function year() {
-                var y = document.getElementById("years").value;
-                if (y !== null) {
-                    url = url + "?year=" + y;
-                    window.location = url;
 
-                }
-            }
-
-            function week() {
-                var w = document.getElementById("weeks").value;
-                if (w !== null) {
-                    window.location = url + "?week=" + w;
-                }
-            }
-
-
-        </script>
     </head>
     <body>
         <%@ include file = "sideBar.jsp" %>
@@ -77,11 +58,11 @@
         <div class="timetable">
             <table>
                 <thead>
-
+                <form action="schedule" method="GET" id="formSubmit" >
                     <tr>
                         <th>
                             Year
-                            <select id="years"  onchange="year()" >
+                            <select name="year" id="years"  onchange="formSubmitYear()" >
                                 <c:set var="yearC" value="${requestScope.yearCurrent}"/>
                                 <c:forEach items="${requestScope.listYear}" var="year">
                                     <option value="${year}" ${year eq yearC ? 'selected' : ''}>${year}</option>
@@ -99,7 +80,7 @@
                     <tr>
                         <td>
                             Week:
-                            <select id="weeks" onchange="week()"   >
+                            <select name="week" onchange="formSubmit()" >
                                 <c:set var="t" value="0"/>
                                 <c:set var="currentweek" value="${requestScope.current}"/>
                                 <c:forEach items="${requestScope.list}" var="week">
@@ -112,6 +93,7 @@
                             <td>${d}</td>
                         </c:forEach>
                     </tr>
+                </form>
 
                 </thead>
                 <tbody>
@@ -142,5 +124,17 @@
                 </tbody>
             </table>
         </div>
+        <script>
+            function formSubmit() {
+                document.getElementById("formSubmit").submit();
+            }
+            
+            function formSubmitYear(){
+                var year = document.getElementById("years")
+                 if(year.value !== 2023){
+                      window.location.href = "http://localhost:9999/fap/schedule?year="+year.value+"&week=1";
+                 }
+            }
+        </script>
     </body>
 </html>
