@@ -57,7 +57,7 @@
         </style>
     </head>
     <body>
-        <%--<%@ include file = "sideBar.jsp" %>--%>
+        <%@ include file = "sideBar.jsp" %>
         <!--<div class="title"><h1>FPT University Academic Portal</h1></div>-->        
         <div class="formm">
             <form action="viewattendstudent" method="GET">
