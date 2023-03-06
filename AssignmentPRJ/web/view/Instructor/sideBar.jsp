@@ -20,9 +20,9 @@
 
             .navigation{
                 position: fixed;
-                width: 250px;
+                width: 265px;
                 height:670px;
-                background-color: rgb(91, 91, 207);
+                background-color: #645CBB;
                 color: bisque(218, 180, 135);
                 border-radius: 10px;
                 top: 10px;
@@ -119,23 +119,20 @@
                 transition: 1s;
             }
 
-            .timetable{
-                width: 70rem;
-                margin-left:300px;
-                margin-top:190px;
-                border: 1px solid red;
-            }
+           
         </style>
     </head>
     <body>
         <div class="navigation">
-                    <a href="#">
+            <ul>
+                <li class="list">
+                    <a href="http://localhost:9999/fap/timetable">
                         <span class="icon"><i class="fa-solid fa-calendar"></i></span>
                         <span class="title">Weekly Timetable</span>
                     </a>
                 </li>
                 <li class="list">
-                    <a href="#">
+                    <a href="http://localhost:9999/fap/listattendancegroups">
                         <span class="icon"><i class="fa-solid fa-user-check"></i></span>
                         <span class="title">Take Attendance For Today</span>
                     </a>
