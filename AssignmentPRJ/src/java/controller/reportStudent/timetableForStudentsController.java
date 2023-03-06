@@ -44,39 +44,22 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
         }
         req.setAttribute("yearCurrent", currentYear);
         req.setAttribute("list", list);
-        if (raw_week == null || currentYear == currYearrr) {
+        if (raw_week == null && currentYear == currYearrr) {
             int currentWeek = getCurrentWeek();
             ArrayList<String> allDay = getEachDayByWeek(currentWeek, currentYear);
             req.setAttribute("current", currentWeek);
             req.setAttribute("days", allDay);
-        } else if (currentYear == currYearrr) {
-            if (raw_week != null) {
-                ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
-                req.setAttribute("current", Integer.parseInt(raw_week));
-                req.setAttribute("yearCurrent", currentYear);
-                req.setAttribute("days", allDay);
-            }
-        } else if (currentYear != currYearrr) {
-            if (raw_week != null && currentYear != currYearrr) {
-                ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
-                req.setAttribute("current", Integer.parseInt(raw_week));
-                req.setAttribute("yearCurrent", currentYear);
-                req.setAttribute("days", allDay);
-            } else {
-                ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
-                req.setAttribute("current", 1);
-                req.setAttribute("yearCurrent", currentYear);
-                req.setAttribute("days", allDay);
-            }
+        } else if (raw_week != null && currentYear == currYearrr) {
+            ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
+            req.setAttribute("current", Integer.parseInt(raw_week));
+            req.setAttribute("days", allDay);
+        } else if (raw_week != null && currentYear != currYearrr) {
+            ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
+            req.setAttribute("current", Integer.parseInt(raw_week));
+            req.setAttribute("days", allDay);
         }
 
-//        if () {
-//            ArrayList<String> allDay = getEachDayByWeek(Integer.parseInt(raw_week), currentYear);
-//            req.setAttribute("current", Integer.parseInt(raw_week));
-//            req.setAttribute("yearCurrent", currentYear);
-//            req.setAttribute("days", allDay);
-//        }
-        if (raw_week != null) {
+        if (raw_week != null || year_raw != null) {
             ArrayList<String> allDay = getEachDayByWeekIndb(Integer.parseInt(raw_week), currentYear);
             String dateFrom = allDay.get(0);
             String dateTo = allDay.get(allDay.size() - 1);
@@ -104,11 +87,12 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
 
         }
 
-        req.getRequestDispatcher("view/student/timetable.jsp").forward(req, resp);
+        req.getRequestDispatcher(
+                "view/student/timetable.jsp").forward(req, resp);
     }
 
     private int getCurrentWeek() {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance(Locale.GERMANY);
         int currentWeek = cal.get(Calendar.WEEK_OF_YEAR);
         return currentWeek;
     }
@@ -149,7 +133,7 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
     }
 
     private ArrayList<String> getEachDayByWeek(int weekNumber, int year) {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance(Locale.GERMANY);
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.WEEK_OF_YEAR, weekNumber);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -165,7 +149,7 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
     }
 
     private ArrayList<String> getEachDayByWeekIndb(int weekNumber, int year) {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance(Locale.GERMANY);
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.WEEK_OF_YEAR, weekNumber);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
