@@ -9,15 +9,43 @@ package model;
  * @author duong
  */
 public class takeAttendance {
+
     private int studentId;
     private String firstName;
     private String lastName;
     private String rollnumber;
     private String groupName;
     private int groupId;
+    private int slotid;
+    private int lectureid;
 
     public takeAttendance() {
     }
+
+    public int getSlotid() {
+        return slotid;
+    }
+
+    public void setSlotid(int slotid) {
+        this.slotid = slotid;
+    }
+
+    public int getLectureid() {
+        return lectureid;
+    }
+
+    public void setLectureid(int lectureid) {
+        this.lectureid = lectureid;
+    }
+
+    public int getInstructorid() {
+        return instructorid;
+    }
+
+    public void setInstructorid(int instructorid) {
+        this.instructorid = instructorid;
+    }
+    private int instructorid;
 
     public int getStudentId() {
         return studentId;
@@ -66,7 +94,5 @@ public class takeAttendance {
     public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
-    
-    
-    
+
 }
