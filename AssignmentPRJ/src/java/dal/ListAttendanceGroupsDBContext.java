@@ -50,8 +50,7 @@ public class ListAttendanceGroupsDBContext extends DBContext<listAttendaneGroups
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select l.TimeSlotID, t.TimeFrom,t.TimeTo,c.Name as 'nameCourse',g.Name,g.GroupID,r.rname from Attendance a inner join Lecture l \n"
-                    + "on a.LectureID = l.LectureID inner join Instructor i\n"
+            String sql = "select l.LectureID, l.InstructorID,l.TimeSlotID, t.SlotID, t.TimeFrom,t.TimeTo,c.Name as 'nameCourse',g.Name,g.GroupID,r.rname from Lecture l inner join Instructor i\n"
                     + "on l.InstructorID = i.InstructorID inner join [Group] g\n"
                     + "on l.GroupID = g.GroupID join TimeSlot t\n"
                     + "on l.TimeSlotID = t.SlotID inner join Course c \n"
@@ -73,6 +72,8 @@ public class ListAttendanceGroupsDBContext extends DBContext<listAttendaneGroups
                 l.setGroupName(rs.getString("Name"));
                 l.setRoomName(rs.getString("rname"));
                 l.setGroupId(rs.getInt("GroupID"));
+                l.setInstructor(rs.getInt("InstructorID"));
+                l.setLectureid(rs.getInt("LectureID"));
                 list.add(l);
             }
         } catch (SQLException ex) {
