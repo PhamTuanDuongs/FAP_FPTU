@@ -12,7 +12,9 @@ import java.sql.Timestamp;
  */
 public class Attendance {
 
-    private Student student;
+    private int studentid;
+    private String firstname;
+    private String lastname;
     private Lecture lecture;
     private String status;
     private String comment;
@@ -22,17 +24,6 @@ public class Attendance {
     private Course course;
 
     public Attendance() {
-    }
-
-    public Attendance(Student student, Lecture lecture, String status, String comment, TimeSlot slot, Timestamp recordTime, Room room, Course course) {
-        this.student = student;
-        this.lecture = lecture;
-        this.status = status;
-        this.comment = comment;
-        this.slot = slot;
-        this.recordTime = recordTime;
-        this.room = room;
-        this.course = course;
     }
 
     public Room getRoom() {
@@ -57,14 +48,6 @@ public class Attendance {
 
     public void setSlot(TimeSlot slot) {
         this.slot = slot;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
     }
 
     public Lecture getLecture() {
