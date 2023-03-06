@@ -15,6 +15,8 @@ public class listAttendaneGroups {
     private String groupName;
     private String roomName;
     private int groupId;
+    private int instructor;
+    private int lectureid;
 
     public int getGroupId() {
         return groupId;
@@ -58,7 +60,21 @@ public class listAttendaneGroups {
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
- 
-    
+
+    public int getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(int instructor) {
+        this.instructor = instructor;
+    }
+
+    public int getLectureid() {
+        return lectureid;
+    }
+
+    public void setLectureid(int lectureid) {
+        this.lectureid = lectureid;
+    }
 
 }
