@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author duong
@@ -18,7 +20,34 @@ public class takeAttendance {
     private int groupId;
     private int slotid;
     private int lectureid;
+    private int instructorid;
+    private String status;
+    private String comment;
+    private Timestamp time;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
     public takeAttendance() {
     }
 
@@ -45,7 +74,6 @@ public class takeAttendance {
     public void setInstructorid(int instructorid) {
         this.instructorid = instructorid;
     }
-    private int instructorid;
 
     public int getStudentId() {
         return studentId;
