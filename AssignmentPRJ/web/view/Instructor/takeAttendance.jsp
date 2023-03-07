@@ -30,7 +30,6 @@
             .timetable{
                 width: 66rem;
                 margin-left:350px;
-                margin-top:30px;
                 border: 1px solid red;
             }
             .formm{
@@ -48,18 +47,27 @@
                 cursor: pointer;
             }
             .title{
-                padding-left: 23rem;
+                padding-left: 22rem;
                 height: 100px;
                 display:flex;
+                align-items: center;
+            }
+            .titel2{
+                padding-left: 22rem;
+                height: 100px;
+                display: flex;
                 align-items: center;
             }
         </style>
     </head>
     <body>
-        <h1>Take Attendance</h1>
-        <div class="title"><h1>FPT University Academic Portal</h1></div>        
+        <%@ include file = "sideBar.jsp" %>
+        <div class="title"><h1>FPT University Academic Portal</h1></div>  
+        <div  class="titel2">
+            <h2>Take Attendance</h1>
+        </div>     
         <div class="timetable">
-            <form>
+            <form action="add"  method="post">
                 <table>
                     <thead>
                     <th>NO</th>
@@ -72,23 +80,28 @@
                     <th>Image</th>
                     </thead>
                     <tbody>
-                        <c:set var="t" value="0"/>
+                        <c:set var="index" value="0"/>
                         <c:forEach items="${requestScope.list}" var="l">
                             <tr>
-                                <c:set var="t" value="${t+1}"/>
-                        <input type="hidden" name="studentid" value="${l.studentId}">
+                                <c:set var="index" value="${index+1}"/>
+                        <input type="hidden" name="id_${index}" value="${s.id}"/>
+                        <input type="hidden" name="studentid_${index}" value="${l.studentId}">
                         <input type="hidden" name="slot" value="${l.slotid}">
-                        <td>${t}</td>
+                        <input type="hidden" name="lectureid" value="${l.lectureid}">
+                        <input type="hidden" name="index" value="${index}">
+                        <input type="hidden" name="groupid" value="${l.groupId}">
+                        <td>${index}</td>
                         <td>${l.groupName}</td>
                         <td>${l.lastName}${' '}${l.firstName}</td>
                         <td>${l.rollnumber}</td>
-                        <td><input type="radio" name="status" checked value="absent">absent</td>
-                        <td><input type="radio" name="status" value="present">present</td>
-                        <td><input style="border: 1px solid black; height: 30px; width: 100%" type="text" name="comment"></td>
+                        <td><input type="radio" name="status_${index}" checked value="absent">absent</td>
+                        <td><input type="radio" name="status_${index}" value="present">present</td>
+                        <td><input style="border: 1px solid black; height: 30px; width: 100%" type="text" name="comment_${index}"></td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
+                <input type="submit"  value="Submit">
             </form>
         </div>
     </body>
