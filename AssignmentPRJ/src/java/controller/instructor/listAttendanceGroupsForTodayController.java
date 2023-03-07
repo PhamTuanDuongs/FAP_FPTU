@@ -20,7 +20,7 @@ import model.listAttendaneGroups;
  *
  * @author duong
  */
-public class listAttendanceGroupsController extends BaseRequiredAuthenticatedControllerForInstructor {
+public class listAttendanceGroupsForTodayController extends BaseRequiredAuthenticatedControllerForInstructor {
      protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             User user = (User)req.getSession().getAttribute("user");
             LocalDate currentdate = LocalDate.now();
@@ -28,7 +28,7 @@ public class listAttendanceGroupsController extends BaseRequiredAuthenticatedCon
             ListAttendanceGroupsDBContext l = new ListAttendanceGroupsDBContext();
             ArrayList<listAttendaneGroups> list = l.allGroup(Date.valueOf("2023-03-20"), user.getInstructorId());
             req.setAttribute("list", list);
-            req.getRequestDispatcher("view/Instructor/listAttendanceGroup.jsp").forward(req, resp);
+            req.getRequestDispatcher("view/Instructor/listAttendanceGroupsForToday.jsp").forward(req, resp);
      }
 
     @Override

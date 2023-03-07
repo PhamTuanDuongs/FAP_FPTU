@@ -20,19 +20,14 @@ import model.takeAttendance;
  *
  * @author duong
  */
-public class takeAttendanceController extends BaseRequiredAuthenticatedControllerForInstructor {
+public class listStudentForTakeAttendanceController extends BaseRequiredAuthenticatedControllerForInstructor {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
+    protected void processrequest(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
         String raw_instructor = request.getParameter("instructor");
         String raw_groupid = request.getParameter("groupid");
         String raw_slot = request.getParameter("slot");
         String raw_lectureid = request.getParameter("lectureid");
+       
         try {
             int groupid = Integer.parseInt(raw_groupid);
             int instructor = Integer.parseInt(raw_instructor);
@@ -45,8 +40,18 @@ public class takeAttendanceController extends BaseRequiredAuthenticatedControlle
         } catch (NumberFormatException e) {
             System.out.println(e);
         }
-        
         request.getRequestDispatcher("view/Instructor/takeAttendance.jsp").forward(request, response);
+
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
+        processrequest(request, response, user);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
+        processrequest(request, response, user);
     }
 
 }
