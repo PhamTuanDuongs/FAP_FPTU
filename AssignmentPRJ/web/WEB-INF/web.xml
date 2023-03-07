@@ -18,11 +18,19 @@
     </servlet>
     <servlet>
         <servlet-name>ListAttendanceGroups</servlet-name>
-        <servlet-class>controller.instructor.listAttendanceGroupsController</servlet-class>
+        <servlet-class>controller.instructor.listAttendanceGroupsForTodayController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>attendanceServletController</servlet-name>
+        <servlet-class>controller.instructor.listStudentForTakeAttendanceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addAttendanceServlet</servlet-name>
         <servlet-class>controller.instructor.takeAttendanceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>viewAttendanceController</servlet-name>
+        <servlet-class>controller.instructor.viewAttendanceController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>attendanceServletController</servlet-name>
         <url-pattern>/attendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addAttendanceServlet</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>viewAttendanceController</servlet-name>
+        <url-pattern>/viewattendance</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
