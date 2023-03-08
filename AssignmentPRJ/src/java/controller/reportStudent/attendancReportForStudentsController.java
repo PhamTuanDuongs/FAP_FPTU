@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import model.Course;
+import model.Group;
 import model.User;
 import model.reportAttendanceForStudents;
 
@@ -26,8 +26,8 @@ public class attendancReportForStudentsController extends BaseRequiredAuthentica
         User u = (User) request.getSession().getAttribute("user");
         CourseDBContext c = new CourseDBContext();
         User user = (User)request.getSession().getAttribute("user");
-        ArrayList<Course> course = c.allCourseByStudentId(user.getStudentId());
-        request.setAttribute("course", course);
+        ArrayList<Group> groupCourse = c.allCourseByStudentId(user.getStudentId());
+        request.setAttribute("course", groupCourse);
 
         String raw_std = request.getParameter("studenId");
         String raw_course = request.getParameter("courseId");
@@ -38,7 +38,7 @@ public class attendancReportForStudentsController extends BaseRequiredAuthentica
             request.setAttribute("attendance", attendance);
         }else{
             reportAttendanceForStudentsDBContext r = new reportAttendanceForStudentsDBContext();
-            ArrayList<reportAttendanceForStudents> attendance = r.allAttendanceByStidCoid(user.getStudentId(), course.get(0).getCourseId());
+            ArrayList<reportAttendanceForStudents> attendance = r.allAttendanceByStidCoid(user.getStudentId(), groupCourse.get(0).getCourse().getCourseId());
             request.setAttribute("attendance", attendance);
         }
         request.getRequestDispatcher("view/student/attendancereport.jsp").forward(request, response);

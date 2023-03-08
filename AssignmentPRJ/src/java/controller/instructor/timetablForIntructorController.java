@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import model.Lecture;
+import model.Session;
 import model.User;
 
 /**
@@ -65,7 +65,7 @@ public class timetablForIntructorController extends BaseRequiredAuthenticatedCon
             String dateTo = allDay.get(allDay.size() - 1);
             timetableForInstructorDBContext t = new timetableForInstructorDBContext();
             User user = (User) req.getSession().getAttribute("user");
-            ArrayList<Lecture> l = t.allSlotInWeek(user.getInstructorId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            ArrayList<Session> l = t.allSlotInWeek(user.getInstructorId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
             if (l == null) {
 
             } else {
@@ -78,7 +78,7 @@ public class timetablForIntructorController extends BaseRequiredAuthenticatedCon
             String dateTo = date.get(date.size() - 1);
             timetableForInstructorDBContext t = new timetableForInstructorDBContext();
             User user = (User) req.getSession().getAttribute("user");
-            ArrayList<Lecture> l = t.allSlotInWeek(user.getInstructorId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            ArrayList<Session> l = t.allSlotInWeek(user.getInstructorId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
 
             if (l == null) {
 

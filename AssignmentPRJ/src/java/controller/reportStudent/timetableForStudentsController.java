@@ -5,7 +5,7 @@
 package controller.reportStudent;
 
 import controller.authentication.BaseRequiredAuthenticatedControllerForStudent;
-import dal.LectureDBContext;
+import dal.SessionDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.sql.Date;
 import java.util.ArrayList;
-import model.Lecture;
+import model.Session;
 import model.User;
 
 /**
@@ -63,9 +63,9 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
             ArrayList<String> allDay = getEachDayByWeekIndb(Integer.parseInt(raw_week), currentYear);
             String dateFrom = allDay.get(0);
             String dateTo = allDay.get(allDay.size() - 1);
-            LectureDBContext le = new LectureDBContext();
+            SessionDBContext le = new SessionDBContext();
             User user = (User) req.getSession().getAttribute("user");
-            ArrayList<Lecture> l = le.timetable(user.getStudentId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            ArrayList<Session> l = le.timetable(user.getStudentId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
             if (l == null) {
 
             } else {
@@ -76,9 +76,9 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
             ArrayList<String> date = getEachDayByWeekIndb(currentw, currentYear);
             String dateFrom = date.get(0);
             String dateTo = date.get(date.size() - 1);
-            LectureDBContext le = new LectureDBContext();
+            SessionDBContext le = new SessionDBContext();
             User user = (User) req.getSession().getAttribute("user");
-            ArrayList<Lecture> l = le.timetable(user.getStudentId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
+            ArrayList<Session> l = le.timetable(user.getStudentId(), Date.valueOf(dateFrom), Date.valueOf(dateTo));
             if (l == null) {
 
             } else {

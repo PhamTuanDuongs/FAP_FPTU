@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Course;
+import model.Group;
 
 /**
  *
@@ -43,13 +44,13 @@ public class CourseDBContext extends DBContext<Course> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public ArrayList<Course> allCourseByStudentId(int id) {
-        ArrayList<Course> course = new ArrayList<>();
+    public ArrayList<Group> allCourseByStudentId(int id) {
+        ArrayList<Group> groupCourse = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
 
         try {
-            String sql = "select c.Code,c.CourseID,g.Name as 'namegroup',l.Date,c.Credit,c.Name from Lecture l inner join [Group] g\n"
+            String sql = "select c.Code,c.CourseID,g.Gname,l.Date,c.Credit,c.Cname,g.GroupID from Lecture l inner join [Group] g\n"
                     + "on l.LectureID  = g.GroupID join Course c\n"
                     + "on g.CourseID = c.CourseID join StudentGroup s\n"
                     + "on g.GroupID = s.GroupID \n"
@@ -58,17 +59,18 @@ public class CourseDBContext extends DBContext<Course> {
             stm.setInt(1, id);
             rs = stm.executeQuery();
             while (rs.next()) {
+                Group g = new Group();
                 Course c = new Course();
                 c.setCode(rs.getString("Code"));
                 c.setCourseId(rs.getInt("CourseID"));
-                c.setCredit(rs.getInt("Credit"));
-                c.setName(rs.getString("Name"));
-                c.setDate(rs.getDate("Date"));
-                c.setGroupname(rs.getString("namegroup"));
-                course.add(c);
+                c.setName(rs.getString("Cname"));
+                g.setGroupId(rs.getInt("GroupID"));
+                g.setGroupName(rs.getString("Gname"));
+                g.setCourse(c);
+                groupCourse.add(g);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(LectureDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
@@ -87,14 +89,14 @@ public class CourseDBContext extends DBContext<Course> {
                 Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return course;
+        return groupCourse;
     }
 
     public static void main(String[] args) {
         CourseDBContext c = new CourseDBContext();
-        ArrayList<Course> course = c.allCourseByStudentId(1);
-        System.out.println(course.get(0).getName());
-       
+        ArrayList<Group> course = c.allCourseByStudentId(1);
+        System.out.println(course.get(0).getCourse().getName());
+
     }
 
 }
