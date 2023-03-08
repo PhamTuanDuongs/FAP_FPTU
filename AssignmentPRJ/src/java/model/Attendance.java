@@ -12,58 +12,45 @@ import java.sql.Timestamp;
  */
 public class Attendance {
 
-    private int studentid;
-    private String firstname;
-    private String lastname;
-    private Lecture lecture;
-    private String status;
-    private String comment;
-    private TimeSlot slot;
+    private Student student;
+    private Session session;
+    private boolean status;
     private Timestamp recordTime;
-    private Room room;
-    private Course course;
+    private String comment;
 
     public Attendance() {
     }
 
-    public Room getRoom() {
-        return room;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public Course getCourse() {
-        return course;
+    public Session getSession() {
+        return session;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setSession(Session session) {
+        this.session = session;
     }
 
-    public TimeSlot getSlot() {
-        return slot;
-    }
-
-    public void setSlot(TimeSlot slot) {
-        this.slot = slot;
-    }
-
-    public Lecture getLecture() {
-        return lecture;
-    }
-
-    public void setLecture(Lecture Lecture) {
-        this.lecture = Lecture;
-    }
-
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public Timestamp getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(Timestamp recordTime) {
+        this.recordTime = recordTime;
     }
 
     public String getComment() {
@@ -74,12 +61,6 @@ public class Attendance {
         this.comment = comment;
     }
 
-    public Timestamp getRecordTime() {
-        return recordTime;
-    }
-
-    public void setRecordTime(Timestamp recordTime) {
-        this.recordTime = recordTime;
-    }
+     
 
 }

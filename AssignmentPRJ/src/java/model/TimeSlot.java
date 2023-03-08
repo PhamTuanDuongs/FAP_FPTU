@@ -18,13 +18,6 @@ public class TimeSlot {
 
     public TimeSlot() {
     }
-
-    public TimeSlot(int slotId, Time timeFrom, Time timeTo) {
-        this.slotId = slotId;
-        this.timeFrom = timeFrom;
-        this.timeTo = timeTo;
-    }
-
     public int getSlotId() {
         return slotId;
     }

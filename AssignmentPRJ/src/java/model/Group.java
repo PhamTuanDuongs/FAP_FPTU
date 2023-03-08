@@ -12,16 +12,19 @@ public class Group {
     private int groupId;
     private String groupName;
     private Course course;
+    private Instructor instructor;
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
 
     public Group() {
     }
-
-    public Group(int groupId, String groupName, Course course) {
-        this.groupId = groupId;
-        this.groupName = groupName;
-        this.course = course;
-    }
-
+ 
     public int getGroupId() {
         return groupId;
     }

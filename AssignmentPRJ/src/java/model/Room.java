@@ -15,11 +15,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(int roomId, String rname) {
-        this.roomId = roomId;
-        this.rname = rname;
-    }
-
+  
     public int getRoomId() {
         return roomId;
     }

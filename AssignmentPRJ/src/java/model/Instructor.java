@@ -18,7 +18,26 @@ public class Instructor {
     private String lastName;
     private Date dob;
     private boolean gender;
+    private String Telephone;
     private String email;
+    private String address;
+    private Department depart;
+
+    public String getTelephone() {
+        return Telephone;
+    }
+
+    public void setTelephone(String Telephone) {
+        this.Telephone = Telephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getInstructorId() {
         return instructorId;
@@ -67,4 +86,22 @@ public class Instructor {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Department getDepart() {
+        return depart;
+    }
+
+    public void setDepart(Department depart) {
+        this.depart = depart;
+    }
+    
+    
 }
