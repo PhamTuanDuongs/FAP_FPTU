@@ -91,15 +91,13 @@
                             <c:forEach begin="2" end="8" step="1" varStatus="w">
                                 <td>
                                     <c:forEach items="${requestScope.schedule}" var="l">
-                                        <c:set var="week" value="${l.weekDay}"/>
-                                        <c:if test="${l.slot eq i.index}">  
-                                            <c:if test="${l.weekDay eq w.index}">  
-                                                ${l.groupName}<br>
-                                                ${l.course}<br>
-                                                ${l.rname}<br>
-
-                                                <c:set var="t" value="${l.status}"/>
-                                                <span ${t eq 'not yet' || t eq  'absent' ? 'style="color: red"': 'style="color: green" '} >(${l.status})</span> 
+                                        <c:set var="week" value="${l.weekday}"/>
+                                        <c:if test="${l.slot.slotId eq i.index}">  
+                                            <c:if test="${l.weekday eq w.index}">  
+                                                ${l.group.groupName}<br>
+                                                ${l.group.course.code}<br>
+                                                ${l.room.rname}<br>
+                                                ${l.status}
                                             </c:if>
                                         </c:if> 
                                     </c:forEach>
