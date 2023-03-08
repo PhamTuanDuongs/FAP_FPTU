@@ -46,6 +46,9 @@ public class takeAttendanceController extends BaseRequiredAuthenticatedControlle
         }
         takeAttendanceDBContext t = new takeAttendanceDBContext();
         t.takeAttendance(attendList);
+        String lecture = request.getParameter("lectureid");
+        
+        response.getWriter().print(lecture);
 //        response.getWriter().print("Take attendance successfully");
           
         

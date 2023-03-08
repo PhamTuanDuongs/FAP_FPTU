@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import model.Session;
 import model.User;
-import model.listAttendaneGroups;
 
 /**
  *
@@ -26,7 +26,7 @@ public class listAttendanceGroupsForTodayController extends BaseRequiredAuthenti
             LocalDate currentdate = LocalDate.now();
             // get current day;
             ListAttendanceGroupsDBContext l = new ListAttendanceGroupsDBContext();
-            ArrayList<listAttendaneGroups> list = l.allGroup(Date.valueOf("2023-03-20"), user.getInstructorId());
+            ArrayList<Session> list = l.allGroup(Date.valueOf("2023-03-20"), user.getInstructorId());
             req.setAttribute("list", list);
             req.getRequestDispatcher("view/Instructor/listAttendanceGroupsForToday.jsp").forward(req, resp);
      }
