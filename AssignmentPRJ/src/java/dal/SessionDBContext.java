@@ -53,26 +53,30 @@ public class SessionDBContext extends DBContext<Session> {
     }
 
     public ArrayList<Session> timetable(int std, Date from, Date to) {
-        ArrayList<Session> lecture = new ArrayList<>();
+        ArrayList<Session> session = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select *,DATEPART(WEEKDAY,Date) as WeekDay from Lecture l inner join Attendance a\n"
-                    + "on l.LectureID  = a.LectureID inner join [Group] g \n"
-                    + "on l.GroupID = g.GroupID join Course c on \n"
-                    + "g.CourseID = c.CourseID join Room r\n"
-                    + "on l.RoomID = r.RoomID join TimeSlot s\n"
-                    + "on l.TimeSlotID = s.SlotID\n"
-                    + "where a.StudentID = ? and l.[Date] between ? and ?";
+            String sql = "select *, DATEPART(WEEKDAY,Date) as WeekDay from\n"
+                    + " Student s inner join  StudentGroup st \n"
+                    + "on s.StudentID =  st.StudentID inner join [Group] g\n"
+                    + "on g.GroupID = st.GroupID inner join Course c\n"
+                    + "on g.CourseID = c.CourseID inner join Session ss on ss.GroupID = g.GroupID inner join Room r \n"
+                    + "on ss.RoomID = r.RoomID inner join TimeSlot t \n"
+                    + "on  ss.TimeSlotID = t.SlotID inner join Instructor i on ss.InstructorID = i.InstructorID \n"
+                    + "inner join Department d on i.Deptid = d.Deptid \n"
+                    + "where s.StudentID = ? and ss.Date between ? and ? ";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, std);
             stm.setDate(2, from);
             stm.setDate(3, to);
             rs = stm.executeQuery();
             while (rs.next()) {
-                Session l = new Session();
                 Session s = new Session();
                 s.setDate(rs.getDate("Date"));
+                s.setId(rs.getInt("SessionID"));
+                s.setStatus(rs.getString("SessionStatus"));
+                s.setWeekday(rs.getInt("WeekDay"));
 
                 TimeSlot t = new TimeSlot();
                 t.setSlotId(rs.getInt("TimeSlotID"));
@@ -112,7 +116,7 @@ public class SessionDBContext extends DBContext<Session> {
                 r.setRname(rs.getString("rname"));
                 s.setRoom(r);
 
-                lecture.add(l);
+                session.add(s);
             }
         } catch (SQLException ex) {
             Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,22 +138,14 @@ public class SessionDBContext extends DBContext<Session> {
                 Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return lecture;
+        return session;
     }
 
     public static void main(String[] args) {
-//        ArrayList<String> date = getEachDayByWeek(12);
-//        String dateFrom = date.get(0);
-//        String dateTo = date.get(date.size() - 1);
-//        LectureDBContext le = new LectureDBContext();
-//        ArrayList<Lecture> l = le.timetable(1, Date.valueOf(dateFrom), Date.valueOf(dateTo));
-//        if (l != null) {
-//            System.out.println(l.size());
-//        } else {
-//
-//        }
+ 
         SessionDBContext le = new SessionDBContext();
         ArrayList<Session> l = le.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
+        System.out.println(l.get(0).getGroup().getCourse().getName());
         System.out.println(l.size());
 
     }

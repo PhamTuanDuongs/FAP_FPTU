@@ -55,7 +55,7 @@ public class ListAttendanceGroupsDBContext extends DBContext<Session> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select * from Lecture l inner join Instructor i \n"
+            String sql = "select * from Session l inner join Instructor i \n"
                     + "                     on l.InstructorID = i.InstructorID inner join [Group] g \n"
                     + "                     on l.GroupID = g.GroupID join TimeSlot t  \n"
                     + "                     on l.TimeSlotID = t.SlotID inner join Course c  \n"
@@ -133,12 +133,5 @@ public class ListAttendanceGroupsDBContext extends DBContext<Session> {
         return list;
     }
 
-    public static void main(String[] args) {
-        ListAttendanceGroupsDBContext t = new ListAttendanceGroupsDBContext();
-        ArrayList<Session> l = t.allGroup(Date.valueOf("2023-03-20"), 6);
-        System.out.println(l.size());
-        for (int i = 0; i < l.size(); i++) {
-            
-        }
-    }
+ 
 }

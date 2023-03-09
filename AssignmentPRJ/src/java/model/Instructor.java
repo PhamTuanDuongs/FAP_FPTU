@@ -13,7 +13,7 @@ import java.sql.Date;
 public class Instructor {
 
     private int instructorId;
-    private String rollnumber;
+    private String instrnumber;
     private String firstName;
     private String lastName;
     private Date dob;
@@ -47,12 +47,12 @@ public class Instructor {
         this.instructorId = instructorId;
     }
 
-    public String getRollnumber() {
-        return rollnumber;
+    public String getinstrnumber() {
+        return instrnumber;
     }
 
-    public void setRollnumber(String rollnumber) {
-        this.rollnumber = rollnumber;
+    public void setinstrnumber(String instrnumber) {
+        this.instrnumber = instrnumber;
     }
 
     public String getFirstName() {

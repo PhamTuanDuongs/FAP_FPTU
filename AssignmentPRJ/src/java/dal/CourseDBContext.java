@@ -50,8 +50,8 @@ public class CourseDBContext extends DBContext<Course> {
         ResultSet rs = null;
 
         try {
-            String sql = "select c.Code,c.CourseID,g.Gname,l.Date,c.Credit,c.Cname,g.GroupID from Lecture l inner join [Group] g\n"
-                    + "on l.LectureID  = g.GroupID join Course c\n"
+            String sql = "select c.Code,c.CourseID,g.Gname,l.Date,c.Credit,c.Cname,g.GroupID from Session l inner join [Group] g\n"
+                    + "on l.Sessionid  = g.GroupID join Course c\n"
                     + "on g.CourseID = c.CourseID join StudentGroup s\n"
                     + "on g.GroupID = s.GroupID \n"
                     + "where s.StudentID = ?";

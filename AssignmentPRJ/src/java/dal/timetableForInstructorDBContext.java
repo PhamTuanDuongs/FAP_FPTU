@@ -56,7 +56,7 @@ public class timetableForInstructorDBContext extends DBContext<Session> {
         ResultSet rs = null;
         try {
             String sql = "select *, DATEPART(WEEKDAY,Date) as WeekDay from\n"
-                    + "Lecture l inner join [Group] g\n"
+                    + "Session l inner join [Group] g\n"
                     + "on g.GroupID = l.GroupID inner join Course c\n"
                     + "on g.CourseID = c.CourseID inner join Room r \n"
                     + "on l.RoomID = r.RoomID inner join TimeSlot t \n"
@@ -71,8 +71,8 @@ public class timetableForInstructorDBContext extends DBContext<Session> {
             while (rs.next()) {
                 Session s = new Session();
                 s.setDate(rs.getDate("Date"));
-                s.setId(rs.getInt("LectureID"));
-                s.setStatus(rs.getString("LecStatus"));
+                s.setId(rs.getInt("SessionID"));
+                s.setStatus(rs.getString("SessionStatus"));
                 s.setWeekday(rs.getInt("WeekDay"));
                 TimeSlot t = new TimeSlot();
                 t.setSlotId(rs.getInt("TimeSlotID"));

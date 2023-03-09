@@ -14,7 +14,7 @@ public class Attendance {
 
     private Student student;
     private Session session;
-    private boolean status;
+    private String  status;
     private Timestamp recordTime;
     private String comment;
 
@@ -37,14 +37,13 @@ public class Attendance {
         this.session = session;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-
     public Timestamp getRecordTime() {
         return recordTime;
     }

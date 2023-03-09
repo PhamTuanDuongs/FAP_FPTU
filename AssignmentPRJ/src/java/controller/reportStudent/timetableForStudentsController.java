@@ -6,6 +6,7 @@ package controller.reportStudent;
 
 import controller.authentication.BaseRequiredAuthenticatedControllerForStudent;
 import dal.SessionDBContext;
+import dal.TimeSlotDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import java.util.Locale;
 import java.sql.Date;
 import java.util.ArrayList;
 import model.Session;
+import model.TimeSlot;
 import model.User;
 
 /**
@@ -29,6 +31,13 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
         String raw_week = req.getParameter("week");
         String year_raw = req.getParameter("year");
         LocalDate currentdate = LocalDate.now();
+        
+        
+        
+        TimeSlotDBContext timeDB = new TimeSlotDBContext();
+        ArrayList<TimeSlot> slots = timeDB.all();
+        req.setAttribute("slots", slots);
+        
         int currentYear = currentdate.getYear();
         int currYearrr = currentdate.getYear();
         int[] listYear = {2021, 2022, 2023, 2024};
@@ -86,9 +95,7 @@ public class timetableForStudentsController extends BaseRequiredAuthenticatedCon
             }
 
         }
-
-        req.getRequestDispatcher(
-                "view/student/timetable.jsp").forward(req, resp);
+        req.getRequestDispatcher("view/student/timetable.jsp").forward(req, resp);
     }
 
     private int getCurrentWeek() {

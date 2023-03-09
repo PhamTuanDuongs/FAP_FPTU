@@ -65,7 +65,7 @@
                 Choose the course: <select name="courseId">
                     <c:forEach items="${requestScope.course}" var="c">
                         <c:set var="course" value="${requestScope.courseid}"/>
-                        <option value="${c.courseId}"  ${course == c.courseId ? 'selected':''}   >${c.name}(${c.code})(${c.groupname},start ${c.date} )</option>
+                        <option value="${c.course.courseId}"  ${course == c.course.courseId ? 'selected':''}   >${c.groupName}(${c.course.name})</option>
                     </c:forEach>
                     <input class="submit" type="submit" value="View" />
                 </select> 
@@ -91,11 +91,11 @@
                             <tr>
                                 <c:set var="t" value="${t+1}"/>
                                 <td>${t}</td>
-                                <td><fmt:formatDate value="${a.date}" pattern="EEEE dd/MMMM/yyyy" /></td>
-                                <td>${a.slot.slotId}_(${a.slot.timeFrom}-${a.slot.timeTo})</td>
-                                <td>${a.room.rname}</td>
-                                <td>${a.instructor}</td>
-                                <td>${a.groupName}</td>
+                                <td><fmt:formatDate value="${a.session.date}" pattern="EEEE dd/MMMM/yyyy" /></td>
+                                <td>${a.session.slot.slotId}_(${a.session.slot.timeFrom}-${a.session.slot.timeTo})</td>
+                                <td>${a.session.room.rname}</td>
+                                <td>${a.session.instructor.instrnumber}</td>
+                                <td>${a.session.group.groupName}</td>
                                 <td>${a.status}</td>
                                 <td>${a.comment}</td>
                             </tr>

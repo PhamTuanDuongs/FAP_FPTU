@@ -97,7 +97,7 @@
                                                 ${l.group.groupName}<br>
                                                 ${l.group.course.code}<br>
                                                 ${l.room.rname}<br>
-                                                ${l.status}
+                                               <span ${t eq 'not yet' || t eq  'absent' ? 'style="color: red"': 'style="color: green" '} >(${l.status})</span> 
                                             </c:if>
                                         </c:if> 
                                     </c:forEach>

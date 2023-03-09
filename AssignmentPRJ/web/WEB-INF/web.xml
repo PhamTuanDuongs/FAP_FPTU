@@ -9,10 +9,6 @@
         <servlet-class>controller.reportStudent.timetableForStudentsController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>attendanceReportForStudentController</servlet-name>
-        <servlet-class>controller.reportStudent.attendancReportForStudentsController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>timetableForInstructorController</servlet-name>
         <servlet-class>controller.instructor.timetablForIntructorController</servlet-class>
     </servlet>
@@ -32,6 +28,10 @@
         <servlet-name>viewAttendanceController</servlet-name>
         <servlet-class>controller.instructor.viewAttendanceController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>attendanceReportForStudent</servlet-name>
+        <servlet-class>controller.reportStudent.attendanceReportForStudents</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -39,10 +39,6 @@
     <servlet-mapping>
         <servlet-name>scheduleController</servlet-name>
         <url-pattern>/schedule</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>attendanceReportForStudentController</servlet-name>
-        <url-pattern>/viewattendstudent</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>timetableForInstructorController</servlet-name>
@@ -63,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>viewAttendanceController</servlet-name>
         <url-pattern>/viewattendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>attendanceReportForStudent</servlet-name>
+        <url-pattern>/viewattendstudent</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

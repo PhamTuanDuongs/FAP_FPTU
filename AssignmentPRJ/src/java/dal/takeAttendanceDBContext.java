@@ -143,7 +143,7 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Name,l.TimeSlotID,l.LectureID,a.comment,a.Status from \n"
+            String sql = "select s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,l.TimeSlotID,l.LectureID,a.comment,a.Status from \n"
                     + "Attendance a inner join Student s\n"
                     + "on a.StudentID = s.StudentID inner join Lecture l \n"
                     + "on a.LectureID = l.LectureID inner join [Group] g\n"
@@ -163,7 +163,7 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
                 t.setLastName(rs.getString("Lastname"));
                 t.setRollnumber(rs.getString("Rollnumber"));
                 t.setGroupId(rs.getInt("GroupID"));
-                t.setGroupName(rs.getString("Name"));
+                t.setGroupName(rs.getString("Gname"));
                 t.setSlotid(rs.getInt("TimeSlotID"));
                 t.setLectureid(rs.getInt("LectureID"));
                 t.setComment(rs.getString("comment"));

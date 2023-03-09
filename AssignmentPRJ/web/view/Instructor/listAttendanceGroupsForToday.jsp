@@ -56,35 +56,35 @@
                 <tbody>
                     <c:forEach items="${requestScope.list}" var="l">
                         <tr>
-                            <td>${l.time.timeFrom}</td>
-                            <td>${l.time.timeTo}</td>
-                            <td>${l.courseName}</td>
-                            <td>${l.groupName}</td>
-                            <td>${l.roomName}</td>
+                            <td>${l.slot.timeFrom}</td>
+                            <td>${l.slot.timeTo}</td>
+                            <td>${l.group.course.name}</td>
+                            <td>${l.group.groupName}</td>
+                            <td>${l.room.rname}</td>
                             <td>
                                 <form action="attendance" method="post">
-                                    <input type="hidden" name="instructor" value="${l.instructor}" >
-                                    <input type="hidden" name="groupid" value="${l.groupId}" >
-                                    <input type="hidden" name="slot" value="${l.time.slotId}" >
-                                    <input type="hidden" name="lectureid" value="${l.lectureid}" >
+                                    <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
+                                    <input type="hidden" name="groupid" value="${l.group.groupId}" >
+                                    <input type="hidden" name="slot" value="${l.slot.slotId}" >
+                                    <input type="hidden" name="lectureid" value="${l.id}" >
                                     <input type="submit" value="Take" >
                                 </form>
                             </td>
                             <td>
                                 <form action="viewattendance" method="post">
-                                    <input type="hidden" name="instructor" value="${l.instructor}" >
-                                    <input type="hidden" name="groupid" value="${l.groupId}" >
-                                    <input type="hidden" name="slot" value="${l.time.slotId}" >
-                                    <input type="hidden" name="lectureid" value="${l.lectureid}" >
+                                    <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
+                                    <input type="hidden" name="groupid" value="${l.group.groupId}" >
+                                    <input type="hidden" name="slot" value="${l.slot.slotId}" >
+                                    <input type="hidden" name="lectureid" value="${l.id}" >
                                     <input type="submit" value="View" >
                                 </form>
                             </td>
                             <td>
                                 <form action="editattendance" method="post">
-                                    <input type="hidden" name="instructor" value="${l.instructor}" >
-                                    <input type="hidden" name="groupid" value="${l.groupId}" >
-                                    <input type="hidden" name="slot" value="${l.time.slotId}" >
-                                    <input type="hidden" name="lectureid" value="${l.lectureid}" >
+                                    <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
+                                    <input type="hidden" name="groupid" value="${l.group.groupId}" >
+                                    <input type="hidden" name="slot" value="${l.slot.slotId}" >
+                                    <input type="hidden" name="lectureid" value="${l.id}" >
                                     <input type="submit" value="Edit" >
                                 </form>
                             </td>
