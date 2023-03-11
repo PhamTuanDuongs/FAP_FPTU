@@ -84,16 +84,15 @@
                         <c:forEach items="${requestScope.list}" var="l">
                             <tr>
                                 <c:set var="index" value="${index+1}"/>
-                        <input type="hidden" name="id_${index}" value="${s.id}"/>
-                        <input type="hidden" name="studentid_${index}" value="${l.studentId}">
-                        <input type="hidden" name="slot" value="${l.slotid}">
-                        <input type="hidden" name="lectureid" value="${l.lectureid}">
+                        <input type="hidden" name="studentid_${index}" value="${l.student.studentid}">
+                        <input type="hidden" name="slot" value="${l.session.slot.slotId}">
+                        <input type="hidden" name="lectureid" value="${l.session.id}">
                         <input type="hidden" name="index" value="${index}">
-                        <input type="hidden" name="groupid" value="${l.groupId}">
+                        <input type="hidden" name="groupid" value="${l.session.group.groupId}">
                         <td>${index}</td>
-                        <td>${l.groupName}</td>
-                        <td>${l.lastName}${' '}${l.firstName}</td>
-                        <td>${l.rollnumber}</td>
+                        <td>${l.session.group.groupName}</td>
+                        <td>${l.student.lastName}${' '}${l.student.firstName}</td>
+                        <td>${l.student.rollnumber}</td>
                         <td><input type="radio" name="status_${index}" checked value="absent">absent</td>
                         <td><input type="radio" name="status_${index}" value="present">present</td>
                         <td><input style="border: 1px solid black; height: 30px; width: 100%" type="text" name="comment_${index}"></td>

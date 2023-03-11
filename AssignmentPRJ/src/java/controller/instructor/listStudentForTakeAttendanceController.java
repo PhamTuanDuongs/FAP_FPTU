@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import model.Attendance;
 import model.User;
-import model.takeAttendance;
 
 /**
  *
@@ -27,7 +27,6 @@ public class listStudentForTakeAttendanceController extends BaseRequiredAuthenti
         String raw_groupid = request.getParameter("groupid");
         String raw_slot = request.getParameter("slot");
         String raw_lectureid = request.getParameter("lectureid");
-       
         try {
             int groupid = Integer.parseInt(raw_groupid);
             int instructor = Integer.parseInt(raw_instructor);
@@ -35,7 +34,7 @@ public class listStudentForTakeAttendanceController extends BaseRequiredAuthenti
             int lectureid = Integer.parseInt(raw_lectureid);
             LocalDate currentdate = LocalDate.now();
             takeAttendanceDBContext t = new takeAttendanceDBContext();
-            ArrayList<takeAttendance> list = t.allStudentsBySlotGroupId(Date.valueOf("2023-03-20"), groupid, instructor, slot, lectureid);
+            ArrayList<Attendance> list = t.allStudentsBySlotGroupId(Date.valueOf("2023-03-20"), groupid, instructor, slot, lectureid);
             request.setAttribute("list", list);
         } catch (NumberFormatException e) {
             System.out.println(e);

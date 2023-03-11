@@ -5,6 +5,7 @@
 package controller.instructor;
 
 import controller.authentication.BaseRequiredAuthenticatedControllerForInstructor;
+import dal.TimeSlotDBContext;
 import dal.timetableForInstructorDBContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import model.Session;
+import model.TimeSlot;
 import model.User;
 
 /**
@@ -28,6 +30,11 @@ public class timetablForIntructorController extends BaseRequiredAuthenticatedCon
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String raw_week = req.getParameter("week");
         String year_raw = req.getParameter("year");
+        
+        TimeSlotDBContext timeDB = new TimeSlotDBContext();
+        ArrayList<TimeSlot> slots = timeDB.all();
+        req.setAttribute("slots", slots);
+        
         LocalDate currentdate = LocalDate.now();
         int currentYear = currentdate.getYear();
         int currYearrr = currentdate.getYear();

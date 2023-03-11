@@ -85,19 +85,20 @@
                     </thead>
                 </form>
                 <tbody>
-                    <c:forEach begin="1" end="4" step="1" varStatus="i"> 
+                    <c:forEach items="${requestScope.slots}" var="slot" > 
                         <tr>
-                            <td>Slot ${i.index}</td>
+                            <td>Slot ${slot.slotId}</td>
                             <c:forEach begin="2" end="8" step="1" varStatus="w">
                                 <td>
                                     <c:forEach items="${requestScope.schedule}" var="l">
                                         <c:set var="week" value="${l.weekday}"/>
-                                        <c:if test="${l.slot.slotId eq i.index}">  
+                                        <c:if test="${l.slot.slotId eq slot.slotId}">  
                                             <c:if test="${l.weekday eq w.index}">  
                                                 ${l.group.groupName}<br>
                                                 ${l.group.course.code}<br>
                                                 ${l.room.rname}<br>
-                                               <span ${t eq 'not yet' || t eq  'absent' ? 'style="color: red"': 'style="color: green" '} >(${l.status})</span> 
+                                                <c:set var="t" value="${l.status}"/>
+                                                <span ${t eq 'not yet' || t eq  'absent' ? 'style="color: red"': 'style="color: green" '} >(${l.status})</span> 
                                             </c:if>
                                         </c:if> 
                                     </c:forEach>
@@ -105,8 +106,6 @@
                             </c:forEach>
                         </tr>
                     </c:forEach>
-
-
                 </tbody>
             </table>
         </div>
@@ -114,12 +113,12 @@
             function formSubmit() {
                 document.getElementById("formSubmit").submit();
             }
-            
-            function formSubmitYear(){
+
+            function formSubmitYear() {
                 var year = document.getElementById("years")
-                 if(year.value !== 2023){
-                      window.location.href = "http://localhost:9999/fap/timetable?year="+year.value+"&week=1";
-                 }
+                if (year.value !== 2023) {
+                    window.location.href = "http://localhost:9999/fap/timetable?year=" + year.value + "&week=1";
+                }
             }
         </script>
     </body>

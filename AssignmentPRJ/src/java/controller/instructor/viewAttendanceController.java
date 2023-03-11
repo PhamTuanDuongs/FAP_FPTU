@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import model.Attendance;
 import model.User;
 import model.takeAttendance;
 
@@ -40,7 +41,7 @@ public class viewAttendanceController extends BaseRequiredAuthenticatedControlle
             int lectureid = Integer.parseInt(raw_lectureid);
             LocalDate currentdate = LocalDate.now();
             takeAttendanceDBContext t = new takeAttendanceDBContext();
-            ArrayList<takeAttendance> liststudent = t.viewAttendance(Date.valueOf("2023-03-20"), groupid, instructor, slot, lectureid);
+            ArrayList<Attendance> liststudent = t.viewAttendance(Date.valueOf("2023-03-20"), groupid, instructor, slot, lectureid);
             request.setAttribute("liststudent", liststudent);
         } catch (NumberFormatException e) {
             System.out.println(e);

@@ -69,7 +69,7 @@ public class ListAttendanceGroupsDBContext extends DBContext<Session> {
             while (rs.next()) {
                 Session s = new Session();
                 s.setDate(rs.getDate("Date"));
-
+                s.setId(rs.getInt("Sessionid"));
                 TimeSlot t = new TimeSlot();
                 t.setSlotId(rs.getInt("TimeSlotID"));
                 t.setTimeFrom(rs.getTime("TimeFrom"));
@@ -133,5 +133,9 @@ public class ListAttendanceGroupsDBContext extends DBContext<Session> {
         return list;
     }
 
- 
+    public static void main(String[] args) {
+        ListAttendanceGroupsDBContext l = new ListAttendanceGroupsDBContext();
+        ArrayList<Session> s = l.allGroup(Date.valueOf("2023-03-20"), 6);
+        System.out.println(s.get(0).getId());
+    }
 }
