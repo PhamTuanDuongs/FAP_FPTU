@@ -8,12 +8,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Attendance;
 import model.Group;
+import model.Instructor;
 import model.Session;
 import model.Student;
 import model.TimeSlot;
@@ -50,23 +52,24 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public ArrayList<Attendance> allStudentsBySlotGroupId(Date date, int groupid, int instructorid, int slot, int lectureid) {
+    public ArrayList<Attendance> allStudentsBySlotGroupId(Date date, int groupid, int instructorid, int slot, int sessionid) {
         ArrayList<Attendance> list = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,l.TimeSlotID,l.SessionId from \n"
-                    + "                    Attendance a inner join Student s \n"
-                    + "                     on a.StudentID = s.StudentID inner join Session l  \n"
-                    + "                    on a.SessionID = l.SessionId inner join [Group] g \n"
-                    + "                     on l.GroupID = g.GroupID \n"
-                    + "                     where  l.Date = ? and g.GroupID = ? and l.InstructorID = ? and l.TimeSlotID = ? and l.SessionId = ?";
+            String sql = "SELECT s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,ses.TimeSlotID,ses.SessionId FROM  \n"
+                    + "                   Student s LEFT JOIN [StudentGroup] sg ON s.StudentID = sg.StudentID\n"
+                    + "                   LEFT JOIN [Group] g ON g.GroupID = sg.GroupID left join Course c  \n"
+                    + "                   on c.CourseID = g.CourseID LEFT JOIN [Session] ses ON ses.GroupID = g.GroupID \n"
+                    + "                   LEFT JOIN [Attendance] a ON ses.sessionid = a.SessionID AND s.StudentID = a.StudentID  left join Instructor i on ses.InstructorID = i.InstructorID\n"
+                    + "                   where ses.Date = ? and g.GroupID = ?  and i.InstructorID = ? and ses.TimeSlotID = ? and ses.SessionID = ? \n"
+                    + "		          order by s.StudentID";
             stm = connection.prepareStatement(sql);
             stm.setDate(1, date);
             stm.setInt(2, groupid);
             stm.setInt(3, instructorid);
             stm.setInt(4, slot);
-            stm.setInt(5, lectureid);
+            stm.setInt(5, sessionid);
             rs = stm.executeQuery();
             while (rs.next()) {
                 Attendance a = new Attendance();
@@ -112,39 +115,42 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
         return list;
     }
 
-    public void takeAttendance(ArrayList<Attendance> attend) {
-        PreparedStatement stm = null;
-
+    public void takeAttendance(ArrayList<Attendance> attend, int sessionid) {
         try {
-            String sql = "update Attendance SET Status = ?, comment = ?, Record = ? from \n"
-                    + "Attendance a inner join Student s\n"
-                    + "on a.StudentID = s.StudentID inner join Lecture l \n"
-                    + "on a.LectureID = l.LectureID inner join [Group] g\n"
-                    + "on l.GroupID = g.GroupID\n"
-                    + "where l.LectureID = ? and s.StudentID = ? and  l.Date = ? and g.GroupID = ? and l.InstructorID = ? and l.TimeSlotID = ?";
-            stm = connection.prepareStatement(sql);
+            connection.setAutoCommit(false);
+            String sql_update_session = "UPDATE  [Session]\n"
+                    + "   SET [SessionStatus] = 'attended'\n"
+                    + " WHERE SessionId = ?";
+            PreparedStatement stm_update_session = connection.prepareStatement(sql_update_session);
+            stm_update_session.setInt(1, sessionid);
+            stm_update_session.executeUpdate();
             for (Attendance attendance : attend) {
-                stm.setString(1, attendance.getStatus());
-                stm.setString(2, attendance.getComment());
-                stm.setTimestamp(3, attendance.getRecordTime());
-                stm.setInt(4, attendance.getSession().getId());
-                stm.setInt(5, attendance.getStudent().getStudentid());
-//                LocalDate currentdate = LocalDate.now();
-                stm.setDate(6, Date.valueOf("2023-03-20"));
-                stm.setInt(7, attendance.getSession().getGroup().getGroupId());
-                stm.setInt(8, attendance.getSession().getInstructor().getInstructorId());
-                stm.setInt(9, attendance.getSession().getSlot().getSlotId());
-                stm.executeUpdate();
+                String sql_insert_att = "INSERT INTO  [Attendance] \n"
+                        + "                     ([StudentID] \n"
+                        + "                     ,[SessionID]  \n"
+                        + "                    ,[Status] \n"
+                        + "                    ,[Record] \n"
+                        + "                     ,[comment]) \n"
+                        + "                     VALUES(?,?,?,?,?)";
+                PreparedStatement stm_insert_att = connection.prepareStatement(sql_insert_att);
+                stm_insert_att.setInt(1, attendance.getStudent().getStudentid());
+                stm_insert_att.setInt(2, attendance.getSession().getId());
+                stm_insert_att.setString(3, attendance.getStatus());
+                stm_insert_att.setTimestamp(4, attendance.getRecordTime());
+                stm_insert_att.setString(5, attendance.getComment());
+                stm_insert_att.executeUpdate();
             }
+            connection.commit();
         } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(takeAttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             Logger.getLogger(takeAttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                stm.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(takeAttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
+                connection.setAutoCommit(true);
                 connection.close();
             } catch (SQLException ex) {
                 Logger.getLogger(takeAttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -157,12 +163,12 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,l.TimeSlotID,l.LectureID,a.comment,a.Status from \n"
-                    + "Attendance a inner join Student s\n"
-                    + "on a.StudentID = s.StudentID inner join Lecture l \n"
-                    + "on a.LectureID = l.LectureID inner join [Group] g\n"
-                    + "on l.GroupID = g.GroupID\n"
-                    + "where  l.Date = ? and g.GroupID = ? and l.InstructorID = ? and l.TimeSlotID = ? and l.LectureID = ?";
+            String sql = " SELECT s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,ses.TimeSlotID,ses.SessionId FROM  \n"
+                    + "                    Student s LEFT JOIN [StudentGroup] sg ON s.StudentID = sg.StudentID\n"
+                    + "                   LEFT JOIN [Group] g ON g.GroupID = sg.GroupID left join Course c  \n"
+                    + "                   on c.CourseID = g.CourseID LEFT JOIN [Session] ses ON ses.GroupID = g.GroupID \n"
+                    + "                  LEFT JOIN [Attendance] a ON ses.sessionid = a.SessionID AND s.StudentID = a.StudentID  left join Instructor i on ses.InstructorID = i.InstructorID\n"
+                    + "                   where ses.Date = ? and g.GroupID = ?  and i.InstructorID = ? and ses.TimeSlotID = ? and ses.SessionID = ?";
             stm = connection.prepareStatement(sql);
             stm.setDate(1, date);
             stm.setInt(2, groupid);
@@ -171,18 +177,26 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
             stm.setInt(5, lectureid);
             rs = stm.executeQuery();
             while (rs.next()) {
-//                Attendance t = new Attendance();
-//                t.setStudentId(rs.getInt("StudentID"));
-//                t.setFirstName(rs.getString("Firstname"));
-//                t.setLastName(rs.getString("Lastname"));
-//                t.setRollnumber(rs.getString("Rollnumber"));
-//                t.setGroupId(rs.getInt("GroupID"));
-//                t.setGroupName(rs.getString("Gname"));
-//                t.setSlotid(rs.getInt("TimeSlotID"));
-//                t.setLectureid(rs.getInt("LectureID"));
-//                t.setComment(rs.getString("comment"));
-//                t.setStatus(rs.getString("Status"));
-//                list.add(t);
+                Attendance t = new Attendance();
+
+                Student st = new Student();
+                st.setStudentid(rs.getInt("StudentID"));
+                st.setFirstName(rs.getString("Firstname"));
+                st.setLastName(rs.getString("Lastname"));
+                st.setRollnumber(rs.getString("Rollnumber"));
+                t.setStudent(st);
+                Session s = new Session();
+                s.setId(rs.getInt("Sessionid"));
+
+                TimeSlot sl = new TimeSlot();
+                sl.setSlotId(rs.getInt("TimeSlotID"));
+                s.setSlot(sl);
+                Group g = new Group();
+                g.setGroupId(rs.getInt("GroupID"));
+                g.setGroupName(rs.getString("Gname"));
+                s.setGroup(g);
+                t.setSession(s);
+                list.add(t);
             }
         } catch (SQLException ex) {
             Logger.getLogger(takeAttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,9 +222,33 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
     }
 
     public static void main(String[] args) {
-        takeAttendanceDBContext t = new takeAttendanceDBContext();
-        ArrayList<Attendance> list = t.allStudentsBySlotGroupId(Date.valueOf("2023-03-20"), 1, 6, 1, 1);
-        System.out.println(list.get(1).getSession().getId());
+//        takeAttendanceDBContext t = new takeAttendanceDBContext();
+//        ArrayList<Attendance> aa = new ArrayList<>();
+//        Attendance a = new Attendance();
+//        Student st = new Student();
+//        st.setStudentid(1);
+//        a.setStudent(st);
+//        Group g = new Group();
+//        g.setGroupId(1);
+//        Session ss = new Session();
+//        ss.setId(1);
+//        ss.setGroup(g);
+//        TimeSlot slot = new TimeSlot();
+//        slot.setSlotId(1);
+//        ss.setSlot(slot);
+//        Instructor i = new Instructor();
+//        i.setInstructorId(6);
+//        ss.setInstructor(i);
+//        a.setSession(ss);
+//
+//        a.setComment("h");
+//
+//        a.setStatus("prese");
+//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//        a.setRecordTime(timestamp);
+//        aa.add(a);
+//        t.takeAttendance(aa, 1);
+
     }
 
 }
