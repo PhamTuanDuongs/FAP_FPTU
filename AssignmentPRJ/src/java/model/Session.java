@@ -19,6 +19,7 @@ public class Session {
     private Date date;
     private TimeSlot slot;
     private Room room;
+    private Attendance attendance;
     private int weekday;
     public Session() {
     }
@@ -85,6 +86,14 @@ public class Session {
 
     public void setWeekday(int weekday) {
         this.weekday = weekday;
+    }
+
+    public Attendance getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(Attendance attendance) {
+        this.attendance = attendance;
     }
 
 }

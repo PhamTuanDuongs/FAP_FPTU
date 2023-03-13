@@ -28,7 +28,7 @@ public class takeAttendanceController extends BaseRequiredAuthenticatedControlle
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
-        String[] indexs = request.getParameterValues("index");
+        String[] indexs = request.getParameterValues("index"); 
         ArrayList<Attendance> attendList = new ArrayList<>();
         for (String index : indexs) {
            Attendance a = new Attendance();

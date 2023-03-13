@@ -58,7 +58,7 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
             String sql = "select s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,l.TimeSlotID,l.SessionId from \n"
                     + "                    Attendance a inner join Student s \n"
                     + "                     on a.StudentID = s.StudentID inner join Session l  \n"
-                    + "                    on a.LectureID = l.SessionId inner join [Group] g \n"
+                    + "                    on a.SessionID = l.SessionId inner join [Group] g \n"
                     + "                     on l.GroupID = g.GroupID \n"
                     + "                     where  l.Date = ? and g.GroupID = ? and l.InstructorID = ? and l.TimeSlotID = ? and l.SessionId = ?";
             stm = connection.prepareStatement(sql);

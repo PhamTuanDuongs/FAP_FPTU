@@ -96,7 +96,11 @@
                                 <td>${a.session.room.rname}</td>
                                 <td>${a.session.instructor.instrnumber}</td>
                                 <td>${a.session.group.groupName}</td>
-                                <td>${a.status}</td>
+
+                                <td>
+                                    <c:set var="t" value="${a.status}"/>
+                                    <span ${t eq  'absent' ? 'style="color: red"': t eq  'addtended' ? 'style="color: green"': 'style="color: black"'}> ${l.status eq null ? 'Future': l.status eq 'attended' ? 'present' : l.status}</span>
+                                </td>
                                 <td>${a.comment}</td>
                             </tr>
                         </c:forEach>
