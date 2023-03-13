@@ -56,7 +56,7 @@ public class SessionDBContext extends DBContext<Session> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT ses.Date,ses.SessionId,ses.TimeSlotID,g.GroupID,g.Gname,c.Cname,c.Code,c.CourseID,r.RoomID,r.rname,a.Status, DATEPART(WEEKDAY,Date) as WeekDay FROM \n"
+            String sql = "SELECT ses.Date,ses.SessionId,ses.TimeSlotID,g.GroupID,g.Gname,c.Cname,c.Code,c.CourseID,r.RoomID,r.rname,a.Status,a.comment,DATEPART(WEEKDAY,Date) as WeekDay FROM \n"
                     + "Student s LEFT JOIN [StudentGroup] sg ON s.StudentID = sg.StudentID\n"
                     + "LEFT JOIN [Group] g ON g.GroupID = sg.GroupID left join Course c \n"
                     + "on c.CourseID = g.CourseID LEFT JOIN [Session] ses ON ses.GroupID = g.GroupID\n"
@@ -96,7 +96,8 @@ public class SessionDBContext extends DBContext<Session> {
                 s.setRoom(r);
 
                 Attendance a = new Attendance();
-                a.setComment(rs.getString("Status"));
+                a.setComment(rs.getString("comment"));
+                a.setStatus(rs.getString("Status"));
                 s.setAttendance(a);
                 session.add(s);
             }

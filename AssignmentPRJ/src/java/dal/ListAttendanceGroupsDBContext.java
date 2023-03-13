@@ -70,6 +70,7 @@ public class ListAttendanceGroupsDBContext extends DBContext<Session> {
                 Session s = new Session();
                 s.setDate(rs.getDate("Date"));
                 s.setId(rs.getInt("Sessionid"));
+                s.setStatus(rs.getString("SessionStatus"));
                 TimeSlot t = new TimeSlot();
                 t.setSlotId(rs.getInt("TimeSlotID"));
                 t.setTimeFrom(rs.getTime("TimeFrom"));
