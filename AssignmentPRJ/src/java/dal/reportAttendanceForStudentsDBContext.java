@@ -55,15 +55,15 @@ public class reportAttendanceForStudentsDBContext extends DBContext<reportAttend
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-          String sql = "select l.date,l.SessionID, g.Gname,g.GroupID,c.CourseID,c.Code,C.Cname,r.RoomID,r.rname,a.Status,a.comment,a.Record,l.TimeSlotID,s.TimeFrom,s.TimeTo,i.InstructorID,i.instrnumber\n"
-                    + "			from Session l inner join Attendance a \n"
-                    + "                     on l.SessionID  = a.LectureID inner join [Group] g  \n"
-                    + "                    on l.GroupID = g.GroupID join Course c on \n"
-                    + "                     g.CourseID = c.CourseID join Room r \n"
-                    + "                    on l.RoomID = r.RoomID join TimeSlot s \n"
-                    + "                    on l.TimeSlotID = s.SlotID join Instructor i  \n"
-                    + "                     on i.InstructorID = l.InstructorID \n"
-                    + "                     where a.StudentID = ? and c.CourseID = ?";
+            String sql = "SELECT ses.Date,ses.SessionId,ses.TimeSlotID,t.TimeFrom,t.TimeTo,g.GroupID,g.Gname,c.Cname,c.Code,\n"
+                    + "c.CourseID,r.RoomID,r.rname,a.Status,a.comment,i.InstructorID,i.instrnumber, DATEPART(WEEKDAY,Date) as WeekDay\n"
+                    + "FROM Student s LEFT JOIN [StudentGroup] sg ON s.StudentID = sg.StudentID\n"
+                    + "LEFT JOIN [Group] g ON g.GroupID = sg.GroupID left join Course c \n"
+                    + "on c.CourseID = g.CourseID LEFT JOIN [Session] ses ON ses.GroupID = g.GroupID\n"
+                    + "LEFT JOIN [Attendance] a ON ses.sessionid = a.SessionID AND s.StudentID = a.StudentID \n"
+                    + "left join Room r on r.RoomID = ses.RoomID left join Instructor i on ses.InstructorID = i.InstructorID\n"
+                    + "left join TimeSlot t on t.SlotID = ses.TimeSlotID\n"
+                    + "where s.StudentID = ? and c.CourseID = ?";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, studentId);
             stm.setInt(2, courseId);
@@ -72,7 +72,6 @@ public class reportAttendanceForStudentsDBContext extends DBContext<reportAttend
                 Attendance a = new Attendance();
                 a.setStatus(rs.getString("Status"));
                 a.setComment(rs.getString("comment"));
-                a.setRecordTime(rs.getTimestamp("Record"));
 
                 Session s = new Session();
                 s.setDate(rs.getDate("Date"));

@@ -13,10 +13,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Attendance;
 import model.Course;
-import model.Department;
 import model.Group;
-import model.Instructor;
 import model.Room;
 import model.Session;
 import model.TimeSlot;
@@ -57,53 +56,33 @@ public class SessionDBContext extends DBContext<Session> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "select *, DATEPART(WEEKDAY,Date) as WeekDay from\n"
-                    + " Student s inner join  StudentGroup st \n"
-                    + "on s.StudentID =  st.StudentID inner join [Group] g\n"
-                    + "on g.GroupID = st.GroupID inner join Course c\n"
-                    + "on g.CourseID = c.CourseID inner join Session ss on ss.GroupID = g.GroupID inner join Room r \n"
-                    + "on ss.RoomID = r.RoomID inner join TimeSlot t \n"
-                    + "on  ss.TimeSlotID = t.SlotID inner join Instructor i on ss.InstructorID = i.InstructorID \n"
-                    + "inner join Department d on i.Deptid = d.Deptid \n"
-                    + "where s.StudentID = ? and ss.Date between ? and ? ";
+            String sql = "SELECT ses.Date,ses.SessionId,ses.TimeSlotID,g.GroupID,g.Gname,c.Cname,c.Code,c.CourseID,r.RoomID,r.rname,a.Status, DATEPART(WEEKDAY,Date) as WeekDay FROM \n"
+                    + "Student s LEFT JOIN [StudentGroup] sg ON s.StudentID = sg.StudentID\n"
+                    + "LEFT JOIN [Group] g ON g.GroupID = sg.GroupID left join Course c \n"
+                    + "on c.CourseID = g.CourseID LEFT JOIN [Session] ses ON ses.GroupID = g.GroupID\n"
+                    + "LEFT JOIN [Attendance] a ON ses.sessionid = a.Sessionid AND s.StudentID = a.StudentID \n"
+                    + "left join Room r on r.RoomID = ses.RoomID\n"
+                    + "where s.StudentID = ? and ses.Date between ? and ?";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, std);
             stm.setDate(2, from);
             stm.setDate(3, to);
             rs = stm.executeQuery();
             while (rs.next()) {
+
                 Session s = new Session();
                 s.setDate(rs.getDate("Date"));
-                s.setId(rs.getInt("SessionID"));
-                s.setStatus(rs.getString("SessionStatus"));
+                s.setId(rs.getInt("Sessionid"));
                 s.setWeekday(rs.getInt("WeekDay"));
 
                 TimeSlot t = new TimeSlot();
                 t.setSlotId(rs.getInt("TimeSlotID"));
-                t.setTimeFrom(rs.getTime("TimeFrom"));
-                t.setTimeTo(rs.getTime("TimeTo"));
                 s.setSlot(t);
 
                 Group g = new Group();
                 g.setGroupId(rs.getInt("GroupID"));
                 g.setGroupName(rs.getString("Gname"));
 
-                Instructor i = new Instructor();
-                i.setInstructorId(rs.getInt("InstructorID"));
-                i.setFirstName(rs.getString("Firstname"));
-                i.setLastName(rs.getString("Lastname"));
-                i.setEmail(rs.getString("Email"));
-                i.setDob(rs.getDate("DOB"));
-                i.setGender(rs.getBoolean("Gender"));
-                i.setAddress(rs.getString("Address"));
-                i.setTelephone(rs.getString("Telephone"));
-
-                Department d = new Department();
-                d.setDeptId(rs.getInt("Deptid"));
-                d.setDeptName(rs.getString("DeptName"));
-                d.setDeptName(rs.getString("DeptCode"));
-                i.setDepart(d);
-                s.setInstructor(i);
                 Course c = new Course();
                 c.setCode(rs.getString("Code"));
                 c.setName(rs.getString("Cname"));
@@ -116,6 +95,9 @@ public class SessionDBContext extends DBContext<Session> {
                 r.setRname(rs.getString("rname"));
                 s.setRoom(r);
 
+                Attendance a = new Attendance();
+                a.setComment(rs.getString("Status"));
+                s.setAttendance(a);
                 session.add(s);
             }
         } catch (SQLException ex) {
@@ -142,7 +124,7 @@ public class SessionDBContext extends DBContext<Session> {
     }
 
     public static void main(String[] args) {
- 
+
         SessionDBContext le = new SessionDBContext();
         ArrayList<Session> l = le.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
         System.out.println(l.get(0).getGroup().getCourse().getName());
