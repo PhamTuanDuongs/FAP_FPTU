@@ -108,14 +108,13 @@
                                                 ${l.group.groupName}<br>
                                                 ${l.group.course.code}<br>
                                                 ${l.room.rname}<br>
-                                                <c:set var="t" value="${l.status}"/>
-                                                <span ${t eq null || t eq  'absent' ? 'style="color: red"': 'style="color: green" '}>(${l.status eq null ? 'not yet':l.status})</span> 
+                                                <c:set var="t" value="${l.attendance.status}"/>
+                                                <span ${t eq null || t eq  'absent' ? 'style="color: red"': 'style="color: green" '}>(${t eq null ? 'not yet': t eq "absent" ? 'absent' : t})</span> 
                                             </c:if>
                                         </c:if>  
                                     </c:forEach>
                                 </td>
                             </c:forEach>
-                                
                         </tr>
                     </c:forEach>
                 </tbody>

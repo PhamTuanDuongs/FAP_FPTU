@@ -87,10 +87,9 @@
                     </thead>
                     <tbody>
                         <c:set var="t" value="0"/>
-                        <c:forEach items="${requestScope.attendance}" var="a">
+                        <c:forEach items="${requestScope.attendance}" var="a" varStatus="loop">
                             <tr>
-                                <c:set var="t" value="${t+1}"/>
-                                <td>${t}</td>
+                                <td>${loop.index+1}</td>
                                 <td><fmt:formatDate value="${a.session.date}" pattern="EEEE dd/MMMM/yyyy" /></td>
                                 <td>${a.session.slot.slotId}_(${a.session.slot.timeFrom}-${a.session.slot.timeTo})</td>
                                 <td>${a.session.room.rname}</td>
