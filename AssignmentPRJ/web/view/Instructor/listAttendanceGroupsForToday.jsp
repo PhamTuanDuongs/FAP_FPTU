@@ -61,33 +61,54 @@
                             <td>${l.group.course.name}</td>
                             <td>${l.group.groupName}</td>
                             <td>${l.room.rname}</td>
-                            <td>
-                                <form action="attendance" method="post">
-                                    <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
-                                    <input type="hidden" name="groupid" value="${l.group.groupId}" >
-                                    <input type="hidden" name="slot" value="${l.slot.slotId}" >
-                                    <input type="hidden" name="lectureid" value="${l.id}" >
-                                    <input type="submit" value="Take" >
-                                </form>
-                            </td>
-                            <td>
-                                <form action="viewattendance" method="post">
-                                    <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
-                                    <input type="hidden" name="groupid" value="${l.group.groupId}" >
-                                    <input type="hidden" name="slot" value="${l.slot.slotId}" >
-                                    <input type="hidden" name="lectureid" value="${l.id}" >
-                                    <input type="submit" value="View" >
-                                </form>
-                            </td>
-                            <td>
-                                <form action="editattendance" method="post">
-                                    <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
-                                    <input type="hidden" name="groupid" value="${l.group.groupId}" >
-                                    <input type="hidden" name="slot" value="${l.slot.slotId}" >
-                                    <input type="hidden" name="lectureid" value="${l.id}" >
-                                    <input type="submit" value="Edit" >
-                                </form>
-                            </td>
+                            <c:if test="${l.status eq null}">
+                                <td>
+                                    <form action="attendance" method="get">
+                                        <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
+                                        <input type="hidden" name="groupid" value="${l.group.groupId}" >
+                                        <input type="hidden" name="slot" value="${l.slot.slotId}" >
+                                        <input type="hidden" name="sessionid" value="${l.id}" >
+                                        <input type="submit" value="Take" >
+                                    </form>
+                                </td>
+                            </c:if>
+                            <c:if test="${l.status ne null}">
+                                <td>
+
+                                </td>
+                            </c:if>   
+                            <c:if test="${l.status ne null}">
+                                <td>
+                                    <form action="viewattendance" method="post">
+                                        <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
+                                        <input type="hidden" name="groupid" value="${l.group.groupId}" >
+                                        <input type="hidden" name="slot" value="${l.slot.slotId}" >
+                                        <input type="hidden" name="sessionid" value="${l.id}" >
+                                        <input type="submit" value="View" >
+                                    </form>
+                                </td>
+                            </c:if>
+                            <c:if test="${l.status eq null}">
+                                <td>
+
+                                </td>
+                            </c:if> 
+                            <c:if test="${l.status ne null}">
+                                <td>
+                                    <form action="editattendance" method="post">
+                                        <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
+                                        <input type="hidden" name="groupid" value="${l.group.groupId}" >
+                                        <input type="hidden" name="slot" value="${l.slot.slotId}" >
+                                        <input type="hidden" name="sessionid" value="${l.id}" >
+                                        <input type="submit" value="Edit" >
+                                    </form>
+                                </td>
+                            </c:if>
+                            <c:if test="${l.status eq null}">
+                                <td>
+
+                                </td>
+                            </c:if> 
                         </tr>
                     </c:forEach>
                 </tbody>
