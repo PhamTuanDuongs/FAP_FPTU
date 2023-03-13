@@ -80,26 +80,26 @@
                     <th>Image</th>
                     </thead>
                     <tbody>
-                        <c:set var="index" value="0"/>
-                        <c:forEach items="${requestScope.list}" var="l">
+                        <c:forEach items="${requestScope.list}" var="l" varStatus="loop">
                             <tr>
-                                <c:set var="index" value="${index+1}"/>
-                        <input type="hidden" name="studentid_${index}" value="${l.student.studentid}">
+                        <input type="hidden" name="studentid_${l.student.studentid}" value="${l.student.studentid}">
                         <input type="hidden" name="slot" value="${l.session.slot.slotId}">
-                        <input type="hidden" name="lectureid" value="${l.session.id}">
-                        <input type="hidden" name="index" value="${index}">
+                        <input type="hidden" name="sessionid" value="${l.session.id}">
+                        <input type="hidden" name="index" value="${loop.index+1}">
                         <input type="hidden" name="groupid" value="${l.session.group.groupId}">
-                        <td>${index}</td>
+                        <td>${loop.index+1}</td>
                         <td>${l.session.group.groupName}</td>
                         <td>${l.student.lastName}${' '}${l.student.firstName}</td>
                         <td>${l.student.rollnumber}</td>
-                        <td><input type="radio" name="status_${index}" checked value="absent">absent</td>
-                        <td><input type="radio" name="status_${index}" value="present">present</td>
-                        <td><input style="border: 1px solid black; height: 30px; width: 100%" type="text" name="comment_${index}"></td>
+                        <input type="hidden" name="sid" value="${l.student.studentid}"/>
+                        <td><input type="radio" name="status_${l.student.studentid}" checked value="absent">absent</td>
+                        <td><input type="radio" name="status_${l.student.studentid}" value="present">present</td>
+                        <td><input style="border: 1px solid black; height: 30px; width: 100%" type="text" name="comment_${l.student.studentid}"></td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
+                 <input type="hidden" name="sess" value="${param.sessionid}"/>
                 <input type="submit"  value="Submit">
             </form>
         </div>
