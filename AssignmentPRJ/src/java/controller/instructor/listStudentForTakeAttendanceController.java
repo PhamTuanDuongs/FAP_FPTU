@@ -26,12 +26,12 @@ public class listStudentForTakeAttendanceController extends BaseRequiredAuthenti
         String raw_instructor = request.getParameter("instructor");
         String raw_groupid = request.getParameter("groupid");
         String raw_slot = request.getParameter("slot");
-        String raw_lectureid = request.getParameter("lectureid");
+        String raw_sessionid = request.getParameter("sessionid");
         try {
             int groupid = Integer.parseInt(raw_groupid);
             int instructor = Integer.parseInt(raw_instructor);
             int slot = Integer.parseInt(raw_slot);
-            int lectureid = Integer.parseInt(raw_lectureid);
+            int lectureid = Integer.parseInt(raw_sessionid);
             LocalDate currentdate = LocalDate.now();
             takeAttendanceDBContext t = new takeAttendanceDBContext();
             ArrayList<Attendance> list = t.allStudentsBySlotGroupId(Date.valueOf("2023-03-20"), groupid, instructor, slot, lectureid);
