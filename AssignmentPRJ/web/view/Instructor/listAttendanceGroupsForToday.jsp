@@ -52,6 +52,7 @@
                 <th>Take Attendance</th>
                 <th>View Attendance</th>
                 <th>Edit Attendance</th>
+                <th>Status Attendance</th>
                 </thead>
                 <tbody>
                     <c:forEach items="${requestScope.list}" var="l">
@@ -84,7 +85,7 @@
                                         <input type="hidden" name="groupid" value="${l.group.groupId}" >
                                         <input type="hidden" name="slot" value="${l.slot.slotId}" >
                                         <input type="hidden" name="sessionid" value="${l.id}" >
-                                        <input type="submit" value="View" >
+                                        <input type="submit" value="View">
                                     </form>
                                 </td>
                             </c:if>
@@ -95,12 +96,25 @@
                             </c:if> 
                             <c:if test="${l.status ne null}">
                                 <td>
-                                    <form action="editattendance" method="post">
+                                    <form action="updateattendance" method="get">
                                         <input type="hidden" name="instructor" value="${l.instructor.instructorId}" >
                                         <input type="hidden" name="groupid" value="${l.group.groupId}" >
                                         <input type="hidden" name="slot" value="${l.slot.slotId}" >
                                         <input type="hidden" name="sessionid" value="${l.id}" >
                                         <input type="submit" value="Edit" >
+                                    </form>
+                                </td>
+                            </c:if>
+                            <c:if test="${l.status eq null}">
+                                <td>
+
+                                </td>
+                            </c:if> 
+                            <c:if test="${l.status ne null}">
+                                <td>
+                                    <form action="statuss" method="get">
+                                        <input type="hidden" name="groupid" value="${l.group.groupId}" >
+                                        <input type="submit" value="Status" >
                                     </form>
                                 </td>
                             </c:if>
