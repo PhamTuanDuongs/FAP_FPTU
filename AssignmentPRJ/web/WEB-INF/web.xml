@@ -32,6 +32,26 @@
         <servlet-name>attendanceReportForStudent</servlet-name>
         <servlet-class>controller.reportStudent.attendanceReportForStudents</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateAttendanceController</servlet-name>
+        <servlet-class>controller.instructor.updateAttendanceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>homeController</servlet-name>
+        <servlet-class>controller.reportStudent.homeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>statusController</servlet-name>
+        <servlet-class>controller.instructor.statusController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>proccessController</servlet-name>
+        <servlet-class>controller.authentication.logoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>homeControllerForInsructor</servlet-name>
+        <servlet-class>controller.instructor.homeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -63,6 +83,26 @@
     <servlet-mapping>
         <servlet-name>attendanceReportForStudent</servlet-name>
         <url-pattern>/viewattendstudent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateAttendanceController</servlet-name>
+        <url-pattern>/updateattendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>homeController</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>statusController</servlet-name>
+        <url-pattern>/statuss</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>proccessController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>homeControllerForInsructor</servlet-name>
+        <url-pattern>/homes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
