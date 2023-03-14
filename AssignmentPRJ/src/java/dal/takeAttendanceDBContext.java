@@ -14,41 +14,42 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Attendance;
+import model.Course;
 import model.Group;
 import model.Instructor;
+import model.Room;
 import model.Session;
 import model.Student;
 import model.TimeSlot;
-import model.takeAttendance;
 
 /**
  *
  * @author duong
  */
-public class takeAttendanceDBContext extends DBContext<takeAttendance> {
+public class takeAttendanceDBContext extends DBContext<Attendance> {
 
     @Override
-    public void insert(takeAttendance model) {
+    public void insert(Attendance model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void update(takeAttendance model) {
+    public void update(Attendance model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void delete(takeAttendance model) {
+    public void delete(Attendance model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public takeAttendance get(int id) {
+    public Attendance get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ArrayList<takeAttendance> all() {
+    public ArrayList<Attendance> all() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -163,7 +164,7 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = " SELECT s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,ses.TimeSlotID,ses.SessionId FROM  \n"
+            String sql = " SELECT s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,ses.TimeSlotID,ses.SessionId,a.Status,a.comment,a.Record FROM  \n"
                     + "                    Student s LEFT JOIN [StudentGroup] sg ON s.StudentID = sg.StudentID\n"
                     + "                   LEFT JOIN [Group] g ON g.GroupID = sg.GroupID left join Course c  \n"
                     + "                   on c.CourseID = g.CourseID LEFT JOIN [Session] ses ON ses.GroupID = g.GroupID \n"
@@ -178,7 +179,9 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
             rs = stm.executeQuery();
             while (rs.next()) {
                 Attendance t = new Attendance();
-
+                t.setStatus(rs.getString("Status"));
+                t.setComment(rs.getString("comment"));
+                t.setRecordTime(rs.getTimestamp("Record"));
                 Student st = new Student();
                 st.setStudentid(rs.getInt("StudentID"));
                 st.setFirstName(rs.getString("Firstname"));
@@ -221,9 +224,99 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
         return list;
     }
 
+    public void updateAttendance(ArrayList<Attendance> attend) {
+
+        try {
+            String sql = "UPDATE [Attendance]\n"
+                    + "   SET  [Status] = ?\n"
+                    + "      ,[Record] = ?\n"
+                    + "      ,[comment] = ?\n"
+                    + " WHERE StudentID = ? and SessionID = ?";
+            PreparedStatement stm_update_att = connection.prepareStatement(sql);
+            for (Attendance attendance : attend) {
+                stm_update_att.setString(1, attendance.getStatus());
+                stm_update_att.setTimestamp(2, attendance.getRecordTime());
+                stm_update_att.setString(3, attendance.getComment());
+                stm_update_att.setInt(4, attendance.getStudent().getStudentid());
+                stm_update_att.setInt(5, attendance.getSession().getId());
+                stm_update_att.executeUpdate();
+                stm_update_att.executeUpdate();
+            }
+        } catch (SQLException ex) {
+
+            Logger.getLogger(takeAttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(takeAttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    public ArrayList<Attendance> statusStudents(int groupId) {
+        ArrayList<Attendance> attendance = new ArrayList<>();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT s.StudentID,s.Firstname,s.Lastname,s.Rollnumber,g.GroupID,g.Gname,ses.TimeSlotID,ses.SessionId,a.Status FROM  \n"
+                    + "                        Student s LEFT JOIN [StudentGroup] sg ON s.StudentID = sg.StudentID \n"
+                    + "                          LEFT JOIN [Group] g ON g.GroupID = sg.GroupID left join Course c   \n"
+                    + "                              on c.CourseID = g.CourseID LEFT JOIN [Session] ses ON ses.GroupID = g.GroupID  \n"
+                    + "                           LEFT JOIN [Attendance] a ON ses.sessionid = a.SessionID AND s.StudentID = a.StudentID  left join Instructor i on ses.InstructorID = i.InstructorID \n"
+                    + "                            where g.GroupID = ?";
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, groupId);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Attendance a = new Attendance();
+                a.setStatus(rs.getString("Status"));
+
+                Session s = new Session();
+                s.setId(rs.getInt("SessionID"));
+
+                TimeSlot t = new TimeSlot();
+                t.setSlotId(rs.getInt("TimeSlotID"));
+                s.setSlot(t);
+
+                Group g = new Group();
+                g.setGroupId(rs.getInt("GroupID"));
+                Student st = new Student();
+                st.setStudentid(rs.getInt("StudentID"));
+                st.setFirstName(rs.getString("Firstname"));
+                st.setLastName(rs.getString("Lastname"));
+                st.setRollnumber(rs.getString("Rollnumber"));
+                a.setStudent(st);
+                attendance.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(reportAttendanceForStudentsDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(reportAttendanceForStudentsDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                stm.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(reportAttendanceForStudentsDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(reportAttendanceForStudentsDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return attendance;
+    }
+
     public static void main(String[] args) {
-//        takeAttendanceDBContext t = new takeAttendanceDBContext();
-//        ArrayList<Attendance> aa = new ArrayList<>();
+
+        takeAttendanceDBContext t = new takeAttendanceDBContext();
+        ArrayList<Attendance> aa = t.statusStudents(1);
 //        Attendance a = new Attendance();
 //        Student st = new Student();
 //        st.setStudentid(1);
@@ -247,8 +340,8 @@ public class takeAttendanceDBContext extends DBContext<takeAttendance> {
 //        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 //        a.setRecordTime(timestamp);
 //        aa.add(a);
-//        t.takeAttendance(aa, 1);
-
+//        t.updateAttendance(aa);
+        System.out.println(aa.get(0).getStudent().getFirstName());
     }
 
 }
