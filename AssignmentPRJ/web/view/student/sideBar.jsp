@@ -119,12 +119,18 @@
                 transition: 1s;
             }
 
-           
+
         </style>
     </head>
     <body>
         <div class="navigation">
             <ul>
+                <li class="list">
+                    <a href="http://localhost:9999/fap/home">
+                        <span class="icon"><i class="fa-solid fa-house"></i></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
                 <li class="list">
                     <a href="http://localhost:9999/fap/schedule">
                         <span class="icon"><i class="fa-solid fa-calendar"></i></span>
@@ -138,9 +144,9 @@
                     </a>
                 </li>
                 <li class="list">
-                    <a href="#">
+                    <a href="http://localhost:9999/fap/logout">
                         <span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span>
-                        <span class="title">Sign Out</span>
+                        <span class="title">Log Out</span>
                     </a>
                 </li>
             </ul>
