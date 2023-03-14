@@ -26,6 +26,7 @@ public class userDBContext extends DBContext<User> {
                 + "      ,[studentId]\n"
                 + "      ,[instructorId]\n"
                 + "      ,[roleId]\n"
+                + "      ,[display]\n"
                 + "  FROM [User]\n"
                 + "  WHERE [username] = '" + username + "'\n"
                 + "  AND [password] = '" + password + "'";
@@ -38,6 +39,7 @@ public class userDBContext extends DBContext<User> {
                 s.setRoleId(rs.getInt("roleId"));
                 s.setStudentId(rs.getInt("studentId"));
                 s.setInstructorId(rs.getInt("instructorId"));
+                s.setDisplayname(rs.getString("display"));
                 return s;
             }
         } catch (SQLException ex) {

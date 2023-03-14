@@ -15,7 +15,7 @@ public class User {
     private int roleId;
     private int studentId;
     private int instructorId;
-
+    private String displayname;
     public int getRoleId() {
         return roleId;
     }
@@ -56,4 +56,11 @@ public class User {
         this.instructorId = instructorId;
     }
 
+    public String getDisplayname() {
+        return displayname;
+    }
+
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
+    }
 }
