@@ -14,8 +14,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
         <title>Schedule</title>
         <style>
+            body{
+               background-color: #EEEEEE;
+            }
             table{
-                border: 1px solid black;
                 width: 70rem;
                 height: 30rem;
             }
@@ -40,7 +42,6 @@
                 width: 70rem;
                 margin-left:300px;
                 margin-top:100px;
-                border: 1px solid red;
             }
 
             .title{
