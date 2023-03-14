@@ -18,6 +18,9 @@
                 border: 0;
                 padding: 0;
             }
+            body{
+               background-color: #EEEEEE;
+            }
             table,thead,th,tbody,tr,td{
                 border: 1px solid black;
             }
@@ -32,11 +35,11 @@
                 width: 66rem;
                 margin-left:350px;
                 margin-top:30px;
-                border: 1px solid red;
             }
             .formm{
                 width: 700px;
                 margin-left:350px;
+                margin-top: 30px;
             }
             select {
                 border:1px solid black;
@@ -53,6 +56,10 @@
                 height: 100px;
                 display:flex;
                 align-items: center;
+            }
+            .percentage{
+                text-align: right;
+                font-weight: bold;
             }
         </style>
     </head>
@@ -73,11 +80,21 @@
         </div>
 
         <c:if test="${requestScope.attendance ne null}">
+
             <div class="timetable">
+                <c:set var="p" value="0"/>
+                <c:forEach items="${requestScope.attendance}" var="a" varStatus="loop">
+                    <c:if test="${a.status eq 'absent'}">
+                        <c:set var="p" value="${p+1}"/>
+                    </c:if>
+                </c:forEach>
+                <c:set var="size" value="${requestScope.attendance.size()}"/>
+                <fmt:formatNumber var="aa" value="${p/size*100}" pattern="##"/>
+                <p class="percentage">ABSENT: ${aa}% ABSENT SO FAR ( ${p} ABSENT ON ${size} TOTAL).</p>
                 <table>
                     <thead>
                     <th>NO</th>
-                    <th>DATE</th>
+                    <th>DATE</th>   
                     <th>SLOT</th>
                     <th>ROOM</th>
                     <th>LECTURER</th>
@@ -98,7 +115,7 @@
 
                                 <td>
                                     <c:set var="t" value="${a.status}"/>
-                                    <span ${t eq  'absent' ? 'style="color: red"': t eq  'addtended' ? 'style="color: green"': 'style="color: black"'}> ${l.status eq null ? 'Future': l.status eq 'attended' ? 'present' : l.status}</span>
+                                    <span ${t eq  "absent" ? 'style="color: red"': t eq  "attended" ? 'style="color: green"': 'style="color: black"'}> ${a.status eq null ? 'Future': a.status eq "attended" ? 'present' : a.status}</span>
                                 </td>
                                 <td>${a.comment}</td>
                             </tr>
