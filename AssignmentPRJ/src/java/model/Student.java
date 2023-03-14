@@ -21,6 +21,7 @@ public class Student {
     private String address;
     private String telephone;
     private String email;
+    private Group group;
 
     public int getStudentid() {
         return studentid;
@@ -92,6 +93,14 @@ public class Student {
 
     public void setGender(boolean gender) {
         this.gender = gender;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
 }
