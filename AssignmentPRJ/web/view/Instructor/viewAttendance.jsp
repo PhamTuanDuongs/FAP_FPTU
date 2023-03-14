@@ -59,6 +59,7 @@
                 <th>Absent</th>
                 <th>Present</th>
                 <th>Comment</th>
+                <th>RecordTime</th>
                 <!--<th>Image</th>-->
                 </thead>
                 <tbody>
@@ -67,12 +68,13 @@
                         <tr>
                             <c:set var="index" value="${index+1}"/>
                             <td>${index}</td>
-                            <td>${l.groupName}</td>
-                            <td>${l.lastName}${' '}${l.firstName}</td>
-                            <td>${l.rollnumber}</td>
+                            <td>${l.session.group.groupName}</td>
+                            <td>${l.student.lastName}${' '}${l.student.firstName}</td>
+                            <td>${l.student.rollnumber}</td>
                             <td><input readonly="" ${l.status eq "absent" ? 'checked':'disabled'}  type="radio" value="absent" >absent</td>
                             <td><input readonly="" ${l.status eq "attended" ? 'checked':'disabled'}  type="radio"  value="present">present</td>
-                            <td><input style="border: 1px solid black; height: 100%; width: 98%" type="text" readonly="" value="${l.comment}"> </td>
+                            <td><input style="border: 1px solid black; height: 100%; width: 100%" type="text" readonly="" value="${l.comment}"> </td>
+                            <td>${l.recordTime}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

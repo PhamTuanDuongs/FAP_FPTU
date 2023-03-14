@@ -33,7 +33,7 @@ public class viewAttendanceController extends BaseRequiredAuthenticatedControlle
         String raw_instructor = request.getParameter("instructor");
         String raw_groupid = request.getParameter("groupid");
         String raw_slot = request.getParameter("slot");
-        String raw_lectureid = request.getParameter("lectureid");
+        String raw_lectureid = request.getParameter("sessionid");
         try {
             int groupid = Integer.parseInt(raw_groupid);
             int instructor = Integer.parseInt(raw_instructor);
