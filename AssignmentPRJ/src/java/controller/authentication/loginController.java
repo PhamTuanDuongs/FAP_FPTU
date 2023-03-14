@@ -24,12 +24,18 @@ public class loginController extends HttpServlet {
         String raw_pass = req.getParameter("pass");
         userDBContext user = new userDBContext();
         User u = user.get(raw_name, raw_pass);
+        
         if (u != null) {
             req.getSession().setAttribute("user", u);
-            resp.getWriter().println("Login successful!");
+            if(u.getRoleId() == 1){
+            resp.sendRedirect("home");
+            }else{
+                resp.sendRedirect("homes");
+            }
         } else {
-            resp.getWriter().println("Login failed");
+            resp.sendRedirect("login");
         }
+
     }
 
     @Override
