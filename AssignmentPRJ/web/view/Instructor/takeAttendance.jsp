@@ -21,7 +21,7 @@
                 border: 1px solid black;
             }
             thead{
-                background-color: #655DBB;
+                background-color: #8077e0;
             }
             th{
                 width: 300px;

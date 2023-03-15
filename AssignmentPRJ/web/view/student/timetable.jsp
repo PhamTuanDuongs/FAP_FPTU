@@ -15,18 +15,21 @@
         <title>Schedule</title>
         <style>
             body{
-               background-color: #EEEEEE;
+                background-color: #EEEEEE;
             }
             table{
                 width: 70rem;
                 height: 30rem;
+                border: 1px solid black;
+                border-collapse: collapse;
             }
             thead{
-                background-color: #3E54AC;
+                background-color: #8077e0;
             }
             th{
                 height:30px;
                 text-align: left;
+                border-right: 1px solid gray;
             }
             thead,tbody,tr,td{
                 border: 1px solid black;
@@ -41,14 +44,22 @@
             .timetable{
                 width: 70rem;
                 margin-left:300px;
-                margin-top:100px;
             }
 
             .title{
-                padding-left: 23rem;
+                padding-left: 19.3rem;
                 height: 100px;
                 display:flex;
                 align-items: center;
+                font-family: Helvetica,Arial,sans-serif;
+            }
+            .title-detail{
+                padding-left: 19rem;
+                height: 100px;
+                display:flex;
+                align-items: center;
+                color: #3E54AC;
+                font-family: Helvetica,Arial,sans-serif;
             }
         </style> 
 
@@ -56,6 +67,7 @@
     <body>
         <%@ include file = "sideBar.jsp" %>
         <div class="title"><h1>FPT University Academic Portal</h1></div>
+        <div class="title-detail"><h1>Timetable</h1></div>
         <div class="timetable">
             <table>
                 <thead>
@@ -99,18 +111,18 @@
                 <tbody>
                     <c:forEach items="${requestScope.slots}" var="slot" varStatus="i"> 
                         <tr>
-                            <td>Slot ${slot.slotId}:(${slot.timeFrom}-${slot.timeTo}) </td>
-                            <c:forEach begin="2" end="8" step="1" varStatus="w">
+                            <td style="width: 222px">Slot ${slot.slotId}<br><span style="background-color: #BFACE2">${slot.timeFrom}-${slot.timeTo}</span></td>
+                                <c:forEach begin="2" end="8" step="1" varStatus="w">
                                 <td>
                                     <c:forEach items="${requestScope.schedule}" var="l">
                                         <c:set var="week" value="${l.weekday}"/>
                                         <c:if test="${l.slot.slotId eq slot.slotId}">
                                             <c:if test="${l.weekday eq w.index}">  
-                                                ${l.group.groupName}<br>
-                                                ${l.group.course.code}<br>
-                                                ${l.room.rname}<br>
+                                                <span style="color: #337ab7;font-weight: bold">${l.group.groupName}</span><br>
+                                                <span style="color: #337ab7;font-weight: bold">${l.group.course.code}</span><br>
+                                                at ${l.room.rname}<br>
                                                 <c:set var="t" value="${l.attendance.status}"/>
-                                                <span ${t eq null || t eq  'absent' ? 'style="color: red"': 'style="color: green" '}>(${t eq null ? 'not yet': t eq "absent" ? 'absent' : t})</span> 
+                                                <span ${t eq null || t eq  'absent' ? 'style="color: red; font-weight: bold"': 'style="color: green;font-weight: bold" '}>(${t eq null ? 'not yet': t eq "absent" ? 'absent' : t})</span> 
                                             </c:if>
                                         </c:if>  
                                     </c:forEach>

@@ -13,20 +13,25 @@
         <title>ViewAttendance</title>
         <style>
             table{
-                border: 1px solid black;
+                border: 1px solid gray;
                 width: 70rem;
                 height: 30rem;
+                border-collapse: collapse;
+            }
+            th{
+                border: 1px solid gray;
             }
             thead{
-                background-color: #655DBB;
+                height: 50px;
+                text-align: left;
+                background-color: #837be1;
             }
             thead,tbody,tr,td{
-                border: 1px solid black;
+                border: 1px solid gray;
             }
             .timetable{
                 width: 70rem;
                 margin-left:300px;
-                border: 1px solid red;
             }
 
             .title{
@@ -40,6 +45,7 @@
                 height: 100px;
                 display: flex;
                 align-items: center;
+                color: #3E54AC;
             }
         </style> 
     </head>
@@ -73,7 +79,7 @@
                             <td>${l.student.rollnumber}</td>
                             <td><input readonly="" ${l.status eq "absent" ? 'checked':'disabled'}  type="radio" value="absent" >absent</td>
                             <td><input readonly="" ${l.status eq "attended" ? 'checked':'disabled'}  type="radio"  value="present">present</td>
-                            <td><input style="border: 1px solid black; height: 100%; width: 100%" type="text" readonly="" value="${l.comment}"> </td>
+                            <td><input type="text" readonly="" value="${l.comment}"> </td>
                             <td>${l.recordTime}</td>
                         </tr>
                     </c:forEach>

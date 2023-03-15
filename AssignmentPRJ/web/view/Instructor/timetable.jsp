@@ -17,25 +17,38 @@
                 border: 1px solid black;
                 width: 70rem;
                 height: 30rem;
+                border-collapse: collapse;
+            }
+            th{
+                height: 30px;
+                text-align: left;
+                border-right: 1px solid gray;
             }
             thead{
-                background-color: #655DBB;
+                background-color: #8077e0;
             }
             thead,tbody,tr,td{
-                border: 1px solid black;
+                border: 1px solid gray;
             }
             .timetable{
                 width: 70rem;
-                margin-left:300px;
-                margin-top:100px;
-                border: 1px solid red;
+                margin-left:320px;
             }
 
             .title{
-                padding-left: 23rem;
+                padding-left: 20rem;
                 height: 100px;
                 display:flex;
                 align-items: center;
+                font-family: Helvetica,Arial,sans-serif;
+            }
+            .title-detail{
+                padding-left: 20rem;
+                height: 70px;
+                display:flex;
+                align-items: center;
+                color: #3E54AC;
+                font-family: Helvetica,Arial,sans-serif;
             }
         </style> 
 
@@ -43,12 +56,13 @@
     <body>
         <%@ include file = "sideBar.jsp" %>
         <div class="title"><h1>FPT University Academic Portal</h1></div>
+         <div class="title-detail"><h1>Timetable</h1></div>
         <div class="timetable">
             <table>
                 <form action="timetable" method="get" id="formSubmit">
                     <thead>
                         <tr>
-                            <td>
+                            <th>
                                 Year
                                 <select name="year" id="years"  onchange="formSubmitYear()" >
                                     <c:set var="yearC" value="${requestScope.yearCurrent}"/>
@@ -56,17 +70,17 @@
                                         <option value="${year}" ${year eq yearC ? 'selected' : ''}>${year}</option>
                                     </c:forEach>
                                 </select>
-                            </td>
-                            <td>Mon</td>
-                            <td>Tues</td>
-                            <td>Weds</td>
-                            <td>Thurs</td>
-                            <td>Fri</td>
-                            <td>Sun</td>
-                            <td>Sat</td>
+                            </th>
+                            <th>Mon</th>
+                            <th>Tues</th>
+                            <th>Weds</th>
+                            <th>Thurs</th>
+                            <th>Fri</th>
+                            <th>Sun</th>
+                            <th>Sat</th>
                         </tr>
                         <tr>
-                            <td>
+                            <th>
                                 Week:
                                 <select name="week" onchange="formSubmit()" >
                                     <c:set var="t" value="0"/>
@@ -76,9 +90,9 @@
                                         <option value="${t}" ${ t eq currentweek ? 'selected':''}>${week}</option>
                                     </c:forEach>
                                 </select>
-                            </td>
+                            </th>
                             <c:forEach items="${requestScope.days}" var="d">
-                                <td>${d}</td>
+                                <th>${d}</th>
                             </c:forEach>
                         </tr>
 
@@ -87,7 +101,7 @@
                 <tbody>
                     <c:forEach items="${requestScope.slots}" var="slot" > 
                         <tr>
-                            <td>Slot ${slot.slotId}</td>
+                            <td style="width: 222px">Slot ${slot.slotId}<br><span style="background-color: #BFACE2">${slot.timeFrom}-${slot.timeTo}</span></td>
                             <c:forEach begin="2" end="8" step="1" varStatus="w">
                                 <td>
                                     <c:forEach items="${requestScope.schedule}" var="l">
@@ -99,7 +113,10 @@
                                                 ${l.room.rname}<br>
                                                 <c:set var="t" value="${l.status}"/>
                                                 <span ${t eq null || t eq  'absent' ? 'style="color: red"': 'style="color: green" '}>(${t eq null ? 'not yet': t eq "absent" ? 'absent' : t})</span> 
-
+                                                <form action="statuss" method="get">
+                                                    <input type="hidden" name="groupid" value="${l.group.groupId}" >
+                                                    <input type="submit" value="Status" >
+                                                </form>
                                             </c:if>
                                         </c:if> 
                                     </c:forEach>

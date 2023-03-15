@@ -21,23 +21,30 @@
             table,thead,th,tbody,tr,td{
                 border: 1px solid black;
             }
+            th{
+                height: 23px;
+            }
             thead{
-                background-color: #655DBB;
+                background-color: #8077e0;
             }
             table{
+                width: 95%;
                 height: 24rem;
+                border-collapse: collapse;
+                margin: auto;
             }
             .statustable{
-                width: 87rem;
+                width: 100%;
                 height: 50rem;
-                margin-top: 8rem;
+                margin-top: 2rem;
+                text-align: center;
             }
             .button{
                 text-align: center;
             }
-            
 
- 
+
+
             .button-5 {
                 align-items: center;
                 background-clip: padding-box;
@@ -80,21 +87,37 @@
                 box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
                 transform: translateY(0);
             }
+            .title{
+                margin-top:3rem;
+                margin-left:2.5rem;
+            }
+            .title-detail{
+                margin-top:3rem;
+                margin-left:2.5rem;
+                color: #3E54AC;
+            }
         </style>
     </head>
     <body>
         <div class="title"><h1>FPT University Academic Portal</h1></div>  
+        <div class="title-detail"><h2>Detail Status</h2></div>  
         <div  class="statustable">
             <table>
                 <thead>
-                <th style="width: 2rem">NO</th>
-                <th style="width: 4rem">Group</th>
-                <th style="width: 4rem">RollNumber</th>
-                <th style="width: 10rem">Name</th>
-                    <c:forEach var = "i" begin = "1" end = "20">
-                    <th>slot ${i}</th>
-                    </c:forEach>
-                <th style="width: 5rem">ABSENT <= 20</th>    
+                    <tr>
+                        <th rowspan="2">NO</th>
+                        <th rowspan="2">GROUP</th>
+                        <th rowspan="2">ROLLNUMBER</th>
+                        <th rowspan="2">STUDENT NAME</th>
+                        <th colspan="20">SLOT   
+                        <th rowspan="2">SUMMARY</th>
+                        <th rowspan="2">PERCENT ABSENT</th>
+                    </tr>
+                    <tr>
+                        <c:forEach var = "i" begin = "1" end = "20">
+                            <th>${i}</th>
+                        </c:forEach>
+                    </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${requestScope.list}" var="l" varStatus="loop">
@@ -116,20 +139,16 @@
                                     </c:if>
                                 </c:forEach>
                                 <fmt:formatNumber var="aa" value="${p/20*100}" pattern="##"/>
+                            <td>${p}/20</td>      
                             <td ${aa >= 10 ? 'style="color:red"':''} >${aa}%</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <div class="button"><a class="button-5" href="http://localhost:9999/fap/listattendancegroups">BACK</a></div>
+            <div class="button"><a class="button-5" href="http://localhost:9999/fap/timetable">BACK</a></div>
         </div>
     </body>
 </html>
 
 
-<c:forEach items="${requestScope.attendance}" var="a" varStatus="loop">
-    <c:if test="${a.status eq 'absent'}">
-        <c:set var="p" value="${p+1}"/>
-    </c:if>
-</c:forEach>
 

@@ -16,9 +16,12 @@
                 border: 1px solid black;
                 width: 70rem;
                 height: 15rem;
+                border-collapse: collapse;
+                text-align: center;
             }
             thead{
-                background-color: #655DBB;
+                background-color: #837be1;
+                height: 50px;
             }
             thead,tbody,tr,td{
                 border: 1px solid black;
@@ -27,7 +30,6 @@
                 width: 70rem;
                 margin-left:300px;
                 margin-top:100px;
-                border: 1px solid red;
             }
 
             .title{
@@ -35,6 +37,71 @@
                 height: 100px;
                 display:flex;
                 align-items: center;
+            }
+            .button-take {
+                background-color: #c2fbd7;
+                border-radius: 100px;
+                box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+                color: green;
+                cursor: pointer;
+                display: inline-block;
+                font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+                padding: 7px 20px;
+                text-align: center;
+                text-decoration: none;
+                transition: all 250ms;
+                border: 0;
+                font-size: 16px;
+                -webkit-user-select: none;
+            }
+
+            .button-take:hover {
+                box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+                transform: scale(1.05) rotate(-1deg);
+            }
+            
+            .button-view {
+                background-color: #c2fbd7;
+                border-radius: 100px;
+                box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+                color: green;
+                cursor: pointer;
+                display: inline-block;
+                font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+                padding: 7px 20px;
+                text-align: center;
+                text-decoration: none;
+                transition: all 250ms;
+                border: 0;
+                font-size: 16px;
+                -webkit-user-select: none;
+            }
+
+            .button-view:hover {
+                box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+                transform: scale(1.05) rotate(-1deg);
+            }
+            
+            .button-edit {
+                background-color: #c2fbd7;
+                border-radius: 100px;
+                box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+                color: green;
+                cursor: pointer;
+                display: inline-block;
+                font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+                padding: 7px 20px;
+                text-align: center;
+                text-decoration: none;
+                transition: all 250ms;
+                border: 0;
+                font-size: 16px;
+                -webkit-user-select: none;
+            }
+
+            .button-edit:hover {
+                box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+                transform: scale(1.05) rotate(-1deg);
             }
         </style>
     </head>
@@ -52,7 +119,6 @@
                 <th>Take Attendance</th>
                 <th>View Attendance</th>
                 <th>Edit Attendance</th>
-                <th>Status Attendance</th>
                 </thead>
                 <tbody>
                     <c:forEach items="${requestScope.list}" var="l">
@@ -69,7 +135,7 @@
                                         <input type="hidden" name="groupid" value="${l.group.groupId}" >
                                         <input type="hidden" name="slot" value="${l.slot.slotId}" >
                                         <input type="hidden" name="sessionid" value="${l.id}" >
-                                        <input type="submit" value="Take" >
+                                        <input  class="button-take" type="submit" value="Take" >
                                     </form>
                                 </td>
                             </c:if>
@@ -85,7 +151,7 @@
                                         <input type="hidden" name="groupid" value="${l.group.groupId}" >
                                         <input type="hidden" name="slot" value="${l.slot.slotId}" >
                                         <input type="hidden" name="sessionid" value="${l.id}" >
-                                        <input type="submit" value="View">
+                                        <input class="button-view" type="submit" value="View">
                                     </form>
                                 </td>
                             </c:if>
@@ -101,20 +167,7 @@
                                         <input type="hidden" name="groupid" value="${l.group.groupId}" >
                                         <input type="hidden" name="slot" value="${l.slot.slotId}" >
                                         <input type="hidden" name="sessionid" value="${l.id}" >
-                                        <input type="submit" value="Edit" >
-                                    </form>
-                                </td>
-                            </c:if>
-                            <c:if test="${l.status eq null}">
-                                <td>
-
-                                </td>
-                            </c:if> 
-                            <c:if test="${l.status ne null}">
-                                <td>
-                                    <form action="statuss" method="get">
-                                        <input type="hidden" name="groupid" value="${l.group.groupId}" >
-                                        <input type="submit" value="Status" >
+                                        <input class="button-take" type="submit" value="Edit" >
                                     </form>
                                 </td>
                             </c:if>
@@ -125,6 +178,39 @@
                             </c:if> 
                         </tr>
                     </c:forEach>
+
+                    <c:if test="${requestScope.list.size() == 0}">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </c:if>
                 </tbody>
             </table>
         </div>

@@ -24,22 +24,27 @@
             table,thead,th,tbody,tr,td{
                 border: 1px solid black;
             }
+            table{
+                height: 70%;
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
             thead{
-                background-color: #655DBB;
+                background-color: #837be1;
             }
             th{
                 width: 300px;
                 height: 50px;
             }
             .timetable{
-                width: 66rem;
-                margin-left:350px;
+                width: 68rem;
+                height:100rem;
+                margin-left:320px;
                 margin-top:30px;
             }
             .formm{
                 width: 700px;
-                margin-left:350px;
-                margin-top: 30px;
+                margin-left:320px;
             }
             select {
                 border:1px solid black;
@@ -52,10 +57,19 @@
                 cursor: pointer;
             }
             .title{
-                padding-left: 23rem;
+                padding-left: 19.7rem;
                 height: 100px;
                 display:flex;
                 align-items: center;
+                font-family: Helvetica,Arial,sans-serif;
+            }
+            .title-detail{
+                padding-left: 19.7rem;
+                height: 50px;
+                display:flex;
+                align-items: center;
+                font-family: Helvetica,Arial,sans-serif;
+                color: #3E54AC;
             }
             .percentage{
                 text-align: right;
@@ -65,11 +79,12 @@
     </head>
     <body>
         <%@ include file = "sideBar.jsp" %>
-        <!--<div class="title"><h1>FPT University Academic Portal</h1></div>-->        
+        <div class="title"><h1>FPT University Academic Portal</h1></div>        
+        <div class="title-detail"><h2>View attendance for ${sessionScope.user.displayname}</h2></div>        
         <div class="formm">
             <form action="viewattendstudent" method="GET">
                 <input type="hidden" name="studenId" value="${sessionScope.user.studentId}">
-                Choose the course: <select name="courseId">
+                <h3>Choose the course:</h3>   <select name="courseId">
                     <c:forEach items="${requestScope.course}" var="c">
                         <c:set var="course" value="${requestScope.courseid}"/>
                         <option value="${c.course.courseId}"  ${course == c.course.courseId ? 'selected':''}   >${c.groupName}(${c.course.name})</option>
@@ -100,15 +115,15 @@
                     <th>LECTURER</th>
                     <th>GROUP NAME</th>
                     <th>ATTEDANCE STATUS</th>
-                    <th>ECTURER'S COMMENT</th>
+                    <th>LECTURER'S COMMENT</th>
                     </thead>
                     <tbody>
                         <c:set var="t" value="0"/>
                         <c:forEach items="${requestScope.attendance}" var="a" varStatus="loop">
                             <tr>
-                                <td>${loop.index+1}</td>
-                                <td><fmt:formatDate value="${a.session.date}" pattern="EEEE dd/MMMM/yyyy" /></td>
-                                <td>${a.session.slot.slotId}_(${a.session.slot.timeFrom}-${a.session.slot.timeTo})</td>
+                                <td style="width: 50px">${loop.index+1}</td>
+                                <td style="width: 600px"><fmt:formatDate value="${a.session.date}" pattern="EEEE dd/MMMM/yyyy" /></td>
+                                <td style="width: 500px">${a.session.slot.slotId}_(${a.session.slot.timeFrom}-${a.session.slot.timeTo})</td>
                                 <td>${a.session.room.rname}</td>
                                 <td>${a.session.instructor.instrnumber}</td>
                                 <td>${a.session.group.groupName}</td>
