@@ -63,6 +63,7 @@ public class takeAttendanceController extends BaseRequiredAuthenticatedControlle
         }
         takeAttendanceDBContext t = new takeAttendanceDBContext();
         t.takeAttendance(attendList, sessionid);
+        response.sendRedirect("listattendancegroups");
 //        response.getWriter().print(attendList.get(0).getComment()+"\n");
 //        response.getWriter().print(attendList.get(0).getRecordTime()+"\n");
 //        response.getWriter().print(attendList.get(0).getStatus()+"\n");
