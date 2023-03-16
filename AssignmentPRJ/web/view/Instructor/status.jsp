@@ -126,7 +126,7 @@
                             <td>${loop.index + 1}</td>
                             <td>${l.group.groupName}</td>
                             <td class="roll">${l.rollnumber}</td>
-                            <td>${l.lastName}${""}${l.firstName}</td>
+                            <td>${l.lastName}${" "}${l.firstName}</td>
 
                             <c:set var="p" value="0"/>
                             <c:forEach items="${listStudent}" var="ls">

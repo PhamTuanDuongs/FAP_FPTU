@@ -75,6 +75,7 @@
                 text-align: right;
                 font-weight: bold;
             }
+            
         </style>
     </head>
     <body>
@@ -84,13 +85,14 @@
         <div class="formm">
             <form action="viewattendstudent" method="GET">
                 <input type="hidden" name="studenId" value="${sessionScope.user.studentId}">
-                <h3>Choose the course:</h3>   <select name="courseId">
+                <h3>Choose the course:</h3> 
+                <select name="courseId">
                     <c:forEach items="${requestScope.course}" var="c">
                         <c:set var="course" value="${requestScope.courseid}"/>
                         <option value="${c.course.courseId}"  ${course == c.course.courseId ? 'selected':''}   >${c.groupName}(${c.course.name})</option>
                     </c:forEach>
-                    <input class="submit" type="submit" value="View" />
                 </select> 
+                    <input class="submit" type="submit" value="View" />
             </form>
         </div>
 

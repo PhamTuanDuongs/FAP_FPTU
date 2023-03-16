@@ -31,17 +31,17 @@
             }
             .timetable{
                 width: 70rem;
-                margin-left:300px;
+                margin-left:350px;
             }
 
             .title{
-                padding-left: 19rem;
+                padding-left: 22rem;
                 height: 100px;
                 display:flex;
                 align-items: center;
             }
             .titel2{
-                padding-left: 19rem;
+                padding-left: 22rem;
                 height: 100px;
                 display: flex;
                 align-items: center;

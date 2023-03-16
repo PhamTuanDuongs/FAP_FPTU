@@ -76,7 +76,6 @@
                 height: 100px;
                 display:flex;
                 align-items: center;
-                font-family: Helvetica,Arial,sans-serif;
             }
             .title-detail{
                 padding-left: 20rem;
@@ -84,7 +83,6 @@
                 display:flex;
                 align-items: center;
                 color: #3E54AC;
-                font-family: Helvetica,Arial,sans-serif;
             }
 
 
@@ -134,15 +132,16 @@
                 transform: translateY(2px);
             }
             .buttonss{
+                margin-top: 5px;
                 text-align: center;
             }
         </style>
     </head>
     <body>
         <%@ include file = "sideBar.jsp" %>
-        <div class="title"><h1>FPT University Academic Portal</h1></div>  
+        <div class="title"><h1 style="font-family: Helvetica,Arial,sans-serif;">FPT University Academic Portal</h1></div>  
         <div  class="title-detail">
-            <h2>Update Attendance</h1>
+            <h2 style="font-family: Helvetica,Arial,sans-serif;">Update Attendance</h1>
         </div>     
         <div class="timetable">
             <form action="updateattendance"  method="post">
@@ -160,17 +159,19 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${requestScope.liststudent}" var="l" varStatus="loop">
-                            <tr>
+                        <td>
                         <input type="hidden" name="studentid_${l.student.studentid}" value="${l.student.studentid}">
                         <input type="hidden" name="slot" value="${l.session.slot.slotId}">
                         <input type="hidden" name="sessionid" value="${l.session.id}">
                         <input type="hidden" name="index" value="${loop.index+1}">
                         <input type="hidden" name="groupid" value="${l.session.group.groupId}">
+                        <input type="hidden" name="sid" value="${l.student.studentid}"/>
+                        </td>
+                            <tr>
                         <td>${loop.index+1}</td>
                         <td>${l.session.group.groupName}</td>
                         <td>${l.student.lastName}${' '}${l.student.firstName}</td>
                         <td>${l.student.rollnumber}</td>
-                        <input type="hidden" name="sid" value="${l.student.studentid}"/>
                         <td><input type="radio" name="status_${l.student.studentid}" ${l.status eq "absent"?'checked':' '} value="absent">absent</td>
                         <td><input type="radio" name="status_${l.student.studentid}" ${l.status eq "attended"?'checked':' '} value="present">present</td>
                         <td><input style="height: 30px; width: 100%" type="text" name="comment_${l.student.studentid}" value="${l.comment}"></td>

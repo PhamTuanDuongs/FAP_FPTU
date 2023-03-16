@@ -20,7 +20,7 @@
 
             .navigation{
                 position: fixed;
-                width: 265px;
+                width: 275px;
                 height:670px;
                 background-color: #645CBB;
                 color: bisque(218, 180, 135);

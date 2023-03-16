@@ -29,8 +29,8 @@
     <body>
         <%@ include file = "sideBar.jsp" %>
         <div class="content">
-        <h2>Hello ${requestScope.profile}</h2>
-        <h1>LECTURER</h1>
+            <h2 style="font-family: Helvetica,Arial,sans-serif;">Hello ${requestScope.profile}</h2>
+        <h1 style="font-family: Helvetica,Arial,sans-serif;">LECTURER</h1>
         </div>
     </body>
 </html>

@@ -28,12 +28,11 @@
             }
             .timetable{
                 width: 70rem;
-                margin-left:300px;
-                margin-top:100px;
+                margin-left:330px;
             }
 
             .title{
-                padding-left: 23rem;
+                padding-left: 20.5rem;
                 height: 100px;
                 display:flex;
                 align-items: center;
@@ -59,7 +58,7 @@
                 box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
                 transform: scale(1.05) rotate(-1deg);
             }
-            
+
             .button-view {
                 background-color: #c2fbd7;
                 border-radius: 100px;
@@ -81,7 +80,7 @@
                 box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
                 transform: scale(1.05) rotate(-1deg);
             }
-            
+
             .button-edit {
                 background-color: #c2fbd7;
                 border-radius: 100px;
@@ -103,11 +102,18 @@
                 box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
                 transform: scale(1.05) rotate(-1deg);
             }
+             .title-detail{
+                padding-left: 20.5rem;
+                display:flex;
+                align-items: center;
+                color: #3E54AC;
+            }
         </style>
     </head>
     <body>
         <%@ include file = "sideBar.jsp" %>
-        <div class="title"><h1>FPT University Academic Portal</h1></div>
+        <div class="title"><h1 style="font-family: Helvetica,Arial,sans-serif;">FPT University Academic Portal</h1></div>
+        <div class="title-detail"><h2 style="font-family: Helvetica,Arial,sans-serif;">List attendance groups for today</h2></div>
         <div class="timetable">
             <table>
                 <thead>
@@ -139,9 +145,10 @@
                                     </form>
                                 </td>
                             </c:if>
-                            <c:if test="${l.status ne null}">
-                                <td>
 
+                            <c:if test="${l.status ne null}">
+                                <td style="color: green">
+                                    Take attendance successfully <i class="fa-sharp fa-solid fa-circle-check"></i>
                                 </td>
                             </c:if>   
                             <c:if test="${l.status ne null}">

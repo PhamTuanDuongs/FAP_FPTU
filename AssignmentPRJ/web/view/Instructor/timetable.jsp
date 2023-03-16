@@ -40,7 +40,6 @@
                 height: 100px;
                 display:flex;
                 align-items: center;
-                font-family: Helvetica,Arial,sans-serif;
             }
             .title-detail{
                 padding-left: 20rem;
@@ -48,16 +47,38 @@
                 display:flex;
                 align-items: center;
                 color: #3E54AC;
-                font-family: Helvetica,Arial,sans-serif;
+            }
+
+            .button-status {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 6px 14px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+                border-radius: 6px;
+                border: none;
+                cursor: pointer;
+                text-decoration: underline;
+                color: #fff;
+                background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
+                background-origin: border-box;
+                box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+                -webkit-user-select: none;
+            }
+            .button-status:focus {
+                box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+                outline: 0;
+                
             }
         </style> 
 
     </head>
     <body>
         <%@ include file = "sideBar.jsp" %>
-        <div class="title"><h1>FPT University Academic Portal</h1></div>
-         <div class="title-detail"><h1>Timetable</h1></div>
+        <div class="title"><h1 style="font-family: Helvetica,Arial,sans-serif;">FPT University Academic Portal</h1></div>
+        <div class="title-detail"><h1 style="font-family: Helvetica,Arial,sans-serif;">Timetable</h1></div>
         <div class="timetable">
+
             <table>
                 <form action="timetable" method="get" id="formSubmit">
                     <thead>
@@ -93,29 +114,28 @@
                             </th>
                             <c:forEach items="${requestScope.days}" var="d">
                                 <th>${d}</th>
-                            </c:forEach>
+                                </c:forEach>
                         </tr>
-
-                    </thead>
                 </form>
+                </thead>
                 <tbody>
                     <c:forEach items="${requestScope.slots}" var="slot" > 
                         <tr>
                             <td style="width: 222px">Slot ${slot.slotId}<br><span style="background-color: #BFACE2">${slot.timeFrom}-${slot.timeTo}</span></td>
-                            <c:forEach begin="2" end="8" step="1" varStatus="w">
+                                <c:forEach begin="2" end="8" step="1" varStatus="w">
                                 <td>
                                     <c:forEach items="${requestScope.schedule}" var="l">
                                         <c:set var="week" value="${l.weekday}"/>
                                         <c:if test="${l.slot.slotId eq slot.slotId}">  
                                             <c:if test="${l.weekday eq w.index}">  
-                                                ${l.group.groupName}<br>
-                                                ${l.group.course.code}<br>
-                                                ${l.room.rname}<br>
+                                                <span style="color: #337ab7;font-weight: bold">${l.group.groupName}</span><br>
+                                                <span style="color: #337ab7;font-weight: bold">${l.group.course.code}</span><br>
+                                                at ${l.room.rname}<br>
                                                 <c:set var="t" value="${l.status}"/>
                                                 <span ${t eq null || t eq  'absent' ? 'style="color: red"': 'style="color: green" '}>(${t eq null ? 'not yet': t eq "absent" ? 'absent' : t})</span> 
                                                 <form action="statuss" method="get">
                                                     <input type="hidden" name="groupid" value="${l.group.groupId}" >
-                                                    <input type="submit" value="Status" >
+                                                    <input class="button-status" type="submit" value="Status" >
                                                 </form>
                                             </c:if>
                                         </c:if> 
