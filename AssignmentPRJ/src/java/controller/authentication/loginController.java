@@ -33,14 +33,14 @@ public class loginController extends HttpServlet {
                 resp.sendRedirect("homes");
             }
         } else {
-            resp.sendRedirect("login");
+            req.getRequestDispatcher("view/authentication/login.jsp").forward(req, resp);
         }
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("view/authentication/login.jsp");
+         req.getRequestDispatcher("view/authentication/login.jsp").forward(req, resp);
 
     }
 

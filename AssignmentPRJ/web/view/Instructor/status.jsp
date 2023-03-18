@@ -3,7 +3,7 @@
     Created on : Mar 14, 2023, 3:27:02 PM
     Author     : duong
 --%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -114,8 +114,10 @@
                         <th rowspan="2">PERCENT ABSENT</th>
                     </tr>
                     <tr>
-                        <c:forEach var = "i" begin = "1" end = "20">
-                            <th>${i}</th>
+                        <c:forEach items="${requestScope.listSession}" var="session">
+                          <c:set var="date" value="${session.date}"/> 
+                          <fmt:formatDate var="dayMonth" value="${date}" pattern="dd-MM" />
+                            <th>${dayMonth}</th>
                         </c:forEach>
                     </tr>
                 </thead>
@@ -138,8 +140,9 @@
                                         </c:if>
                                     </c:if>
                                 </c:forEach>
-                                <fmt:formatNumber var="aa" value="${p/20*100}" pattern="##"/>
-                            <td>${p}/20</td>      
+                                    <c:set var="size" value="${requestScope.listSession.size()}"/>
+                                <fmt:formatNumber var="aa" value="${p/size*100}" pattern="##"/>
+                            <td>${p}/${size}</td>      
                             <td ${aa >= 10 ? 'style="color:red"':''} >${aa}%</td>
                         </tr>
                     </c:forEach>

@@ -50,7 +50,43 @@ public class SessionDBContext extends DBContext<Session> {
     public ArrayList<Session> all() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    public ArrayList<Session> allByGroupId(int groupid) {
+        ArrayList<Session> session = new ArrayList<>();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT date from Session where GroupID = ?";
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, groupid);
+            rs = stm.executeQuery();
+            while (rs.next()) {
 
+                Session s = new Session();
+                s.setDate(rs.getDate("date"));
+                session.add(s);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                stm.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return session;
+    }
     public ArrayList<Session> timetable(int std, Date from, Date to) {
         ArrayList<Session> session = new ArrayList<>();
         PreparedStatement stm = null;
@@ -127,9 +163,11 @@ public class SessionDBContext extends DBContext<Session> {
     public static void main(String[] args) {
 
         SessionDBContext le = new SessionDBContext();
-        ArrayList<Session> l = le.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
-        System.out.println(l.get(0).getGroup().getCourse().getName());
-        System.out.println(l.size());
+        ArrayList<Session> all = le.allByGroupId(1);
+        System.out.println(all.size());
+//        ArrayList<Session> l = le.timetable(1, Date.valueOf("2023-03-20"), Date.valueOf("2023-03-24"));
+//        System.out.println(l.get(0).getGroup().getCourse().getName());
+//        System.out.println(l.size());
 
     }
 

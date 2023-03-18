@@ -150,12 +150,12 @@
                     <thead>
                     <th>NO</th>
                     <th>Group</th>
-                    <th>Name</th>
                     <th>Rollnumber</th>
+                    <th>Name</th>
+                    <th>Image</th>
                     <th>Absent</th>
                     <th>Present</th>
                     <th>Comment</th>
-                    <th>Image</th>
                     </thead>
                     <tbody>
                         <c:forEach items="${requestScope.liststudent}" var="l" varStatus="loop">
@@ -170,11 +170,12 @@
                             <tr>
                         <td>${loop.index+1}</td>
                         <td>${l.session.group.groupName}</td>
-                        <td>${l.student.lastName}${' '}${l.student.firstName}</td>
                         <td>${l.student.rollnumber}</td>
+                        <td style="width:40rem">${l.student.lastName}${' '}${l.student.firstName}</td>
+                        <td style="height:162px"><img style="width: 100%; height: 100%;" src="http://localhost:9999/fap/view/img/${l.student.studentid}.jpg" alt=""></td>
                         <td><input type="radio" name="status_${l.student.studentid}" ${l.status eq "absent"?'checked':' '} value="absent">absent</td>
                         <td><input type="radio" name="status_${l.student.studentid}" ${l.status eq "attended"?'checked':' '} value="present">present</td>
-                        <td><input style="height: 30px; width: 100%" type="text" name="comment_${l.student.studentid}" value="${l.comment}"></td>
+                        <td><input style="height: 30px; width: 80%" type="text" name="comment_${l.student.studentid}" value="${l.comment}"></td>
                         </tr>
                     </c:forEach>
                     </tbody>

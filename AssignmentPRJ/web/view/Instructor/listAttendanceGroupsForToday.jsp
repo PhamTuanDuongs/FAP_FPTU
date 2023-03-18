@@ -32,6 +32,7 @@
             }
 
             .title{
+               
                 padding-left: 20.5rem;
                 height: 100px;
                 display:flex;
@@ -103,6 +104,7 @@
                 transform: scale(1.05) rotate(-1deg);
             }
              .title-detail{
+                margin-top: 5.5rem;
                 padding-left: 20.5rem;
                 display:flex;
                 align-items: center;

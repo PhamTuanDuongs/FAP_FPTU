@@ -5,6 +5,7 @@
 package controller.instructor;
 
 import controller.authentication.BaseRequiredAuthenticatedControllerForInstructor;
+import dal.SessionDBContext;
 import dal.listStudentDBContext;
 import dal.takeAttendanceDBContext;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import model.Attendance;
+import model.Session;
 import model.Student;
 import model.User;
 
@@ -27,6 +29,11 @@ public class statusController extends BaseRequiredAuthenticatedControllerForInst
         String raw_groupid = request.getParameter("groupid");
         try {
             int groupid = Integer.parseInt(raw_groupid);
+            
+            SessionDBContext ss = new SessionDBContext();
+            ArrayList<Session> all = ss.allByGroupId(groupid);
+            request.setAttribute("listSession", all);
+            
             listStudentDBContext l = new listStudentDBContext();
              ArrayList<Student> student = l.studentByGroupID(groupid);
             request.setAttribute("list", student);
