@@ -80,10 +80,10 @@
         <div class="timetable">
 
             <table>
-                <form action="timetable" method="get" id="formSubmit">
                     <thead>
                         <tr>
                             <th>
+                <form action="timetable" method="get" id="formSubmit">
                                 Year
                                 <select name="year" id="years"  onchange="formSubmitYear()" >
                                     <c:set var="yearC" value="${requestScope.yearCurrent}"/>
@@ -116,8 +116,8 @@
                                 <th>${d}</th>
                                 </c:forEach>
                         </tr>
-                </form>
                 </thead>
+            </form>
                 <tbody>
                     <c:forEach items="${requestScope.slots}" var="slot" > 
                         <tr>
@@ -132,10 +132,10 @@
                                                 <span style="color: #337ab7;font-weight: bold">${l.group.course.code}</span><br>
                                                 at ${l.room.rname}<br>
                                                 <c:set var="t" value="${l.status}"/>
-                                                <span ${t eq null || t eq  'absent' ? 'style="color: red"': 'style="color: green" '}>(${t eq null ? 'not yet': t eq "absent" ? 'absent' : t})</span> 
+                                                <span ${t eq null?'style="color: #B99B6B;font-weight: bold"':t eq  'absent' ? 'style="color: red;font-weight: bold"': 'style="color: green;font-weight: bold" '}>(${t eq null ? 'not yet': t eq "absent" ? 'absent' : t})</span> 
                                                 <form action="statuss" method="get">
                                                     <input type="hidden" name="groupid" value="${l.group.groupId}" >
-                                                    <input class="button-status" type="submit" value="Status" >
+                                                    <input style="font-weight: bold" class="button-status" type="submit" value="Detail Status" >
                                                 </form>
                                             </c:if>
                                         </c:if> 

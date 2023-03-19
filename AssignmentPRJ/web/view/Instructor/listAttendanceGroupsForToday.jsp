@@ -182,7 +182,7 @@
                             </c:if>
                             <c:if test="${l.status eq null}">
                                 <td>
-
+                                   
                                 </td>
                             </c:if> 
                         </tr>

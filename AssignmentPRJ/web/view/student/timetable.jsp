@@ -122,7 +122,7 @@
                                                 <span style="color: #337ab7;font-weight: bold">${l.group.course.code}</span><br>
                                                 at ${l.room.rname}<br>
                                                 <c:set var="t" value="${l.attendance.status}"/>
-                                                <span ${t eq null || t eq  'absent' ? 'style="color: red; font-weight: bold"': 'style="color: green;font-weight: bold" '}>(${t eq null ? 'not yet': t eq "absent" ? 'absent' : t})</span> 
+                                                <span ${t eq null?'style="color: #B99B6B;font-weight: bold"': t eq  'absent' ? 'style="color: red; font-weight: bold"': 'style="color: green;font-weight: bold" '}>(${t eq null ? 'not yet' : t eq "absent" ? 'absent' : t})</span> 
                                             </c:if>
                                         </c:if>  
                                     </c:forEach>

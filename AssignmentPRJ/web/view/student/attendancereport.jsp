@@ -19,7 +19,7 @@
                 padding: 0;
             }
             body{
-               background-color: #EEEEEE;
+                background-color: #EEEEEE;
             }
             table,thead,th,tbody,tr,td{
                 border: 1px solid black;
@@ -75,7 +75,35 @@
                 text-align: right;
                 font-weight: bold;
             }
-            
+
+            .button-66 {
+                background-color: #0a6bff;
+                border-radius: 4px;
+                border: 0;
+                box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+                box-sizing: border-box;
+                color: #fff;
+                cursor: pointer;
+                font-family: "Space Grotesk",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+                font-size: 18px;
+                font-weight: 700;
+                margin: 0;
+                min-height: 36px;
+                min-width: 90px;
+                position: relative;
+                text-align: center;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                vertical-align: baseline;
+                transition: all .2s cubic-bezier(.22, .61, .36, 1);
+            }
+
+            .button-66:hover {
+                background-color: #065dd8;
+                transform: translateY(-2px);
+            }
+
         </style>
     </head>
     <body>
@@ -86,13 +114,13 @@
             <form action="viewattendstudent" method="GET">
                 <input type="hidden" name="studenId" value="${sessionScope.user.studentId}">
                 <h3>Choose the course:</h3> 
-                <select name="courseId">
+                <select style="height: 30px" name="courseId">
                     <c:forEach items="${requestScope.course}" var="c">
                         <c:set var="course" value="${requestScope.courseid}"/>
                         <option value="${c.course.courseId}"  ${course == c.course.courseId ? 'selected':''}   >${c.groupName}(${c.course.name})</option>
                     </c:forEach>
                 </select> 
-                    <input class="submit" type="submit" value="View" />
+                <input class="button-66" type="submit" value="View" />
             </form>
         </div>
 

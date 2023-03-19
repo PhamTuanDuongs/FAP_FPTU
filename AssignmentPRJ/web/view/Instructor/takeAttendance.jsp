@@ -33,6 +33,7 @@
             .timetable{
                 width: 66rem;
                 margin-left:350px;
+                margin-bottom: 10rem;
             }
             .formm{
                 width: 700px;
@@ -106,7 +107,7 @@
                 transform: translateY(2px);
             }
             .buttonss{
-                margin-top: 5px;
+                margin-top: 10px;
                 text-align: center;
             }
         </style>

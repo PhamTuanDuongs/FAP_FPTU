@@ -134,7 +134,7 @@
                             <c:forEach items="${listStudent}" var="ls">
                                 <c:if test="${l.studentid == ls.student.studentid}">
                                     <td> <c:set var="t" value="${ls.status}"/>
-                                        <span ${t eq  "absent" ? 'style="color: red"': t eq  "attended" ? 'style="color: green"': 'style="color: black"'}> ${ls.status eq null ? 'F': ls.status eq "attended" ? 'P' : ls.status eq "absent" ? 'A':''}</span></td>
+                                        <span ${t eq  "absent" ? 'style="color: red"': t eq  "attended" ? 'style="color: green"': 'style="color: black"'}> ${ls.status eq null ? '-': ls.status eq "attended" ? 'P' : ls.status eq "absent" ? 'A':''}</span></td>
                                         <c:if test="${ls.status eq 'absent'}">
                                             <c:set var="p" value="${p+1}"/>
                                         </c:if>
