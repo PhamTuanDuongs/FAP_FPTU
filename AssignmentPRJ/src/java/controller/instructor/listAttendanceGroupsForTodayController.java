@@ -24,9 +24,10 @@ public class listAttendanceGroupsForTodayController extends BaseRequiredAuthenti
      protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             User user = (User)req.getSession().getAttribute("user");
             LocalDate currentdate = LocalDate.now();
+            req.setAttribute("date", currentdate);
             // get current day;
             ListAttendanceGroupsDBContext l = new ListAttendanceGroupsDBContext();
-            ArrayList<Session> list = l.allGroup(Date.valueOf("2023-03-20"), user.getInstructorId());
+            ArrayList<Session> list = l.allGroup(Date.valueOf(currentdate), user.getInstructorId());
             req.setAttribute("list", list);
             req.getRequestDispatcher("view/Instructor/listAttendanceGroupsForToday.jsp").forward(req, resp);
      }
