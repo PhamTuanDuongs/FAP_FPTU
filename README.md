@@ -1,3 +1,11 @@
-# Assignment-PRJ301
-Assignment-PRJ301 which  is an assignment that allows me to use knowledge of Java, HTML, Javascript, SQL server, and CSS. Besides, I use the Apache Tomcat server to deploy. This a web application for Attendance Taking &amp; Student Grade Management System at FPT University
-https://www.figma.com/file/0BD2Cg73kb245gEavQMCTB/PRJ?node-id=1%3A3&t=BFFjqjTX9AkodTx2-1
+
+## 1. Detailed Specification
+This is an individual assignment of PRJ301\
+You are asked to provide a web application for *Attendance Taking System* at FPT University\
+(I know, FPT already got one, but let assume we are reconstructing it).\
+You can base on existing sources to develop your design including: fap.fpt.edu.vn, flm.fpt.edu.vn, ...
+## 2. Tool
+* Backend: Java JSP Servlet
+* Frontend: HTML CSS 
+* Database: SQL Server
+#### FPTU Semester SPRING 2023 © PhamTuanDuong.
